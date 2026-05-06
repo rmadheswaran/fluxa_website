@@ -1,0 +1,1038 @@
+/* ============================================================
+   FLUXA UI — styles.css
+   Mobile-first · BEM · CSS Custom Properties
+   ============================================================ */
+
+/* ============================================================
+   1. Design Tokens
+   ============================================================ */
+:root {
+  /* Colors */
+  --c-bg:          #faf9f8;
+  --c-bg-alt:      #f4f3f1;
+  --c-dark:        #0a0a0f;
+  --c-dark-2:      #2c2c2c;
+  --c-muted:       #6b7380;
+  --c-white:       #ffffff;
+  --c-border:      #e5e8ec;
+  --c-icon-bg:     #f3f5f8;
+
+  /* Brand gradient (hero title, desc emphasis) */
+  --g-brand:       linear-gradient(
+                     -20.38deg,
+                     #fe6113  5.19%,
+                     #fe3151 28.59%,
+                     #dd48dd 52.43%,
+                     #8168e5 72.29%,
+                     #0048ff 97.01%
+                   );
+  /* Slightly different angle used for the logo & subtle desc text */
+  --g-logo:        linear-gradient(
+                     22.97deg,
+                     #fe6113 29.13%,
+                     #fe3151 41.80%,
+                     #dd48dd 54.71%,
+                     #8168e5 65.46%,
+                     #0048ff 78.85%
+                   );
+  --g-desc:        linear-gradient(
+                     -36.98deg,
+                     #fe6113  5.19%,
+                     #fe3151 28.59%,
+                     #dd48dd 52.43%,
+                     #8168e5 72.29%,
+                     #0048ff 97.01%
+                   );
+
+  /* Typography */
+  --font-sans:     'Inter', sans-serif;
+  --font-serif:    Georgia, 'Times New Roman', serif;
+
+  /* Spacing / Layout */
+  --navbar-h:      80px;
+  --max-w:         1280px;
+  --px:            1.25rem;   /* horizontal page padding — scales up at breakpoints */
+
+  /* Radii */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   14px;
+  --r-2xl:  16px;
+  --r-3xl:  24px;
+  --r-pill: 40px;
+  --r-sec:  80px;             /* rounded-top on sections */
+
+  /* Transitions */
+  --t-fast: 0.15s ease;
+  --t-base: 0.25s ease;
+}
+
+/* ============================================================
+   2. Reset
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--c-bg);
+  color: var(--c-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a { text-decoration: none; color: inherit; }
+ol, ul { list-style: none; }
+button { cursor: pointer; }
+
+/* ============================================================
+   3. Utility Classes
+   ============================================================ */
+
+/* Gradient text */
+.text-gradient {
+  background: var(--g-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-desc {
+  background: var(--g-desc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   4. Container
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: calc(var(--max-w) + var(--px) * 2);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+/* ============================================================
+   5. Shared: Section Header
+   ============================================================ */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-dark);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--c-dark);
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--c-muted);
+  max-width: 24.625rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   6. Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--r-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: opacity var(--t-fast), transform var(--t-fast);
+}
+
+.btn:hover  { opacity: 0.82; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn:focus-visible {
+  outline: 2px solid var(--c-dark);
+  outline-offset: 3px;
+}
+
+.btn--dark {
+  background-color: #000;
+  color: var(--c-white);
+}
+
+.btn--outline {
+  background-color: var(--c-white);
+  color: var(--c-dark);
+  border-color: #000;
+  font-weight: 400;
+}
+
+.btn--full { width: 100%; }
+
+.btn__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   7. Navbar
+   ============================================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: var(--c-bg);
+  border-bottom: 1px solid var(--c-border);
+  height: var(--navbar-h);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: calc(var(--max-w) + 10rem);
+}
+
+/* Logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5625rem;
+  flex-shrink: 0;
+  transition: opacity var(--t-fast);
+}
+.navbar__logo:hover { opacity: 0.8; }
+
+.navbar__logo-icon {
+  width: 2.0625rem;
+  height: 2.0625rem;
+  background: url('../assets/fluxa_icon.svg') no-repeat center / contain;
+  /* mask uses the Figma asset — expires in 7 days; replace with a local SVG for production 
+  -webkit-mask: url('./assets/fluxa_icon.svg') no-repeat center / contain;
+          mask: url('./assets/fluxa_icon.svg') no-repeat center / contain;
+  flex-shrink: 0;*/
+}
+
+.navbar__logo-text {
+  font-family: var(--font-sans);
+  font-size: 1.178rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Desktop nav links */
+.navbar__menu {
+  display: none;
+  gap: 3.4375rem;
+  align-items: center;
+}
+
+.navbar__link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--c-dark);
+  transition: opacity var(--t-fast);
+  padding: 0.25rem 0;
+  position: relative;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--c-dark);
+  transform: scaleX(0);
+  transition: transform var(--t-base);
+  transform-origin: left;
+}
+
+.navbar__link:hover::after { transform: scaleX(1); }
+.navbar__link:hover { opacity: 0.7; }
+
+/* Desktop CTA */
+.navbar__cta { display: none; }
+
+/* Hamburger button */
+.navbar__hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--r-sm);
+  transition: opacity var(--t-fast);
+}
+
+.navbar__hamburger:hover { opacity: 0.7; }
+
+.navbar__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--c-dark);
+  border-radius: 2px;
+  transition: transform var(--t-base), opacity var(--t-base);
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.navbar__hamburger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__hamburger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.navbar__hamburger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile drawer */
+.navbar__drawer {
+  position: absolute;
+  top: var(--navbar-h);
+  left: 0; right: 0;
+  background-color: var(--c-bg);
+  border-bottom: 1px solid var(--c-border);
+  padding: 0 var(--px) 1.25rem;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.navbar__drawer[aria-hidden="false"] { display: flex; }
+
+.navbar__drawer-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--c-dark);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--c-border);
+  transition: opacity var(--t-fast);
+}
+.navbar__drawer-link:hover { opacity: 0.65; }
+
+.navbar__drawer-cta {
+  margin-top: 1.25rem;
+  font-weight: 600;
+}
+
+/* ============================================================
+   8. Hero
+   ============================================================ */
+.hero {
+  padding: 3rem 0 4rem;
+  overflow: hidden;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+  max-width: calc(var(--max-w) + 10rem);
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--c-dark-2);
+  color: var(--c-white);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--r-pill);
+  width: fit-content;
+}
+
+.hero__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.214;
+  font-weight: 400;
+  color: var(--c-dark);
+}
+
+.hero__desc {
+  font-size: 1.125rem;
+  line-height: 1.667;
+  color: var(--c-dark);
+  max-width: 39.3rem;
+}
+
+.hero__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Screenshot */
+.hero__screenshot {
+  width: 100%;
+  max-width: 26.375rem;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+}
+
+.hero__screenshot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--r-lg);
+  transition: transform 0.4s ease;
+}
+
+.hero__screenshot:hover .hero__screenshot-img {
+  transform: scale(1.015);
+}
+
+/* ============================================================
+   9. How It Works — Animated Stepper
+   ============================================================ */
+.how-it-works {
+  background-color: var(--c-bg-alt);
+  border-radius: var(--r-sec) var(--r-sec) 0 0;
+  padding: 5rem 0;
+  margin-top: 1rem;
+}
+
+.how-it-works__inner {
+  max-width: calc(var(--max-w) + 10rem);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+.how-it-works__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: stretch;
+}
+
+/* ---- Steps list ---- */
+.steps {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.step {
+  border-bottom: 1px solid var(--c-border);
+}
+
+.step:first-child {
+  border-top: 1px solid var(--c-border);
+}
+
+/* Trigger button (entire step header is clickable) */
+.step__trigger {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity var(--t-fast);
+}
+
+.step__trigger:hover { opacity: 0.8; }
+
+.step__trigger:focus-visible {
+  outline: 2px solid var(--c-dark);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Number badge */
+.step__number-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--r-md);
+  background-color: var(--c-white);
+  flex-shrink: 0;
+  transition: background-color 0.35s ease;
+}
+
+.step--active .step__number-wrap {
+  background-color: var(--c-dark);
+}
+
+.step__number {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c-dark);
+  line-height: 1;
+  transition: color 0.35s ease;
+}
+
+.step--active .step__number {
+  color: var(--c-white);
+}
+
+/* Step title */
+.step__title {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: var(--c-dark);
+  line-height: 1.2;
+  transition: font-size 0.35s ease;
+}
+
+.step--active .step__title {
+  font-size: 1.5rem;
+}
+
+/* Progress bar — thin line that fills while step is active */
+.step__progress {
+  height: 2px;
+  background-color: transparent;
+  margin-left: 3.75rem; /* align under title text */
+  overflow: hidden;
+}
+
+.step__progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--c-dark);
+  /* duration is injected by JS via inline style */
+  transition: none;
+}
+
+.step--active .step__progress-bar {
+  transition: width linear;
+}
+
+/* Step body — collapses/expands with height + fade + slide */
+.step__body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.4s ease,
+    opacity    0.35s ease 0.05s,
+    transform  0.35s ease 0.05s;
+  padding-left: 3.75rem; /* align under title */
+}
+
+.step--active .step__body {
+  max-height: 12rem;
+  opacity: 1;
+  transform: translateY(0);
+  padding-bottom: 1.5rem;
+}
+
+.step__desc {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--c-dark);
+  border-left: 2px solid var(--c-dark);
+  padding-left: 1.5rem;
+  max-width: 28.875rem;
+}
+
+/* ---- Dynamic image panel ---- */
+.step-images {
+  position: relative;
+  width: 100%;
+  max-width: 32.4375rem;
+  align-self: center;
+  /* Maintains Figma's 519×525 aspect ratio */
+  aspect-ratio: 519 / 525;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  background-color: var(--c-bg);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+  flex-shrink: 0;
+}
+
+/* Each image is stacked; active one fades + scales in */
+.step-image {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+
+.step-image--active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.step-image img {
+  width: 100%;
+  /* Replicate Figma's h-[144.19%] overflow-crop from top */
+  height: 144%;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+}
+
+/* ============================================================
+   10. Features
+   ============================================================ */
+.features {
+  padding: 5rem 0;
+}
+
+.features__inner {
+  max-width: calc(var(--max-w) + 10rem);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.feature-card {
+  background-color: var(--c-white);
+  border-radius: var(--r-xl);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+
+.feature-card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+}
+
+.feature-card__icon-wrap {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: var(--c-icon-bg);
+  border-radius: var(--r-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-card__icon {
+  font-size: 1.875rem;
+  line-height: 1;
+}
+
+.feature-card__title {
+  font-family: var(--font-serif);
+  font-size: 1.3125rem;
+  font-weight: 400;
+  color: var(--c-dark);
+  margin-bottom: 0.25rem;
+}
+
+.feature-card__desc {
+  font-size: 0.8125rem;
+  color: var(--c-muted);
+  line-height: 1.615;
+}
+
+/* ============================================================
+   11. Pricing
+   ============================================================ */
+.pricing {
+  padding: 5rem 0;
+}
+
+.pricing__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(var(--max-w) + 10rem);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+.pricing__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 52.875rem;
+}
+
+.pricing-card {
+  background-color: var(--c-white);
+  border-radius: var(--r-3xl);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3.6875rem;
+  position: relative;
+  transition: box-shadow var(--t-base);
+}
+
+.pricing-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.pricing-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+}
+
+.pricing-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pricing-card__tier {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--c-muted);
+}
+
+.pricing-card__price {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--c-dark);
+  line-height: 1;
+}
+
+.pricing-card__price-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.pricing-card__period {
+  font-size: 1.25rem;
+  color: var(--c-muted);
+  line-height: 2.5;
+}
+
+.pricing-card__tagline {
+  font-size: 0.9375rem;
+  color: var(--c-muted);
+  line-height: 1.4;
+  max-width: 19.1875rem;
+}
+
+.pricing-card__features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pricing-card__feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: var(--c-dark);
+}
+
+.pricing-card__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--c-dark);
+  color: var(--c-white);
+  border-radius: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Most Popular badge */
+.pricing-card__badge {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: var(--c-dark);
+  color: var(--c-white);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.5rem 0.625rem;
+  border-radius: var(--r-xs);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   12. FAQ / Contact CTA
+   ============================================================ */
+.faq {
+  background-color: var(--c-bg-alt);
+  border-radius: var(--r-sec) var(--r-sec) 0 0;
+  padding: 5rem 0 6rem;
+  margin-top: 1rem;
+}
+
+.faq__inner {
+  max-width: calc(var(--max-w) + 10rem);
+  margin-inline: auto;
+  padding-inline: var(--px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+/* Logo mark in FAQ — gradient with mask */
+.faq__logo-mark {
+  width: 6.927rem;
+  height: 6.927rem;
+  background:url(../assets/fluxa_icon.svg) no-repeat center / contain;
+  
+  margin-bottom: 0.5rem;
+}
+
+.faq__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--c-dark);
+}
+
+.faq__desc {
+  font-size: 0.875rem;
+  color: #000;
+  max-width: 18.5rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   13. Footer
+   ============================================================ */
+.footer {
+  background-color: var(--c-dark-2);
+  padding: 4.9375rem 0;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  color: var(--c-bg-alt);
+  max-width: calc(var(--max-w) + 10rem);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+.footer__copy-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 34.125rem;
+}
+
+.footer__copyright {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.footer__legal {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem 2rem;
+}
+
+.footer__link {
+  font-size: 0.875rem;
+  color: var(--c-bg-alt);
+  transition: opacity var(--t-fast);
+}
+
+.footer__link:hover { opacity: 0.6; }
+
+/* ============================================================
+   14. Responsive — Tablet 768px+
+   ============================================================ */
+@media (min-width: 768px) {
+  :root { --px: 2.5rem; }
+
+  /* Navbar */
+  .navbar__hamburger { display: none; }
+  .navbar__menu      { display: flex; }
+  .navbar__cta       { display: inline-flex; }
+  .navbar__drawer    { display: none !important; }
+
+  /* Hero */
+  .hero__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .hero__text {
+    flex: 1;
+    max-width: 39.375rem;
+  }
+
+  .hero__screenshot {
+    width: 42%;
+    max-width: 26.375rem;
+  }
+
+  /* How It Works */
+  .how-it-works__body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  .step-images {
+    width: 46%;
+    max-width: 32.4375rem;
+    align-self: flex-start;
+  }
+
+  /* Features 2-col */
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Pricing side-by-side */
+  .pricing__cards {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .pricing-card { flex: 1; }
+
+  /* Footer */
+  .footer__nav { gap: 1rem 3.125rem; }
+}
+
+/* ============================================================
+   15. Responsive — Desktop 1024px+
+   ============================================================ */
+@media (min-width: 1024px) {
+  :root { --px: 5rem; }
+
+  /* Features 3-col */
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section-label { font-size: 1rem; }
+
+  /* More breathing room */
+  .how-it-works { padding: 5.5rem 0; }
+  .features     { padding: 5.5rem 0; }
+  .pricing      { padding: 5.5rem 0; }
+  .faq          { padding: 5.5rem 0 7rem; }
+}
+
+/* ============================================================
+   16. Responsive — Large screens 1280px+
+   ============================================================ */
+@media (min-width: 1280px) {
+  :root { --px: 5rem; }
+
+  .hero { padding: 3.5rem 0 5rem; }
+
+  .hero__screenshot {
+    width: 26.375rem;
+    max-width: none;
+  }
+}
+
+/* ============================================================
+   17. Accessibility & focus styles
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--c-dark);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
