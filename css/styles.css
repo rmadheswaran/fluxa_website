@@ -630,7 +630,7 @@ button { cursor: pointer; }
 .step-image img {
   width: 100%;
   /* Replicate Figma's h-[144.19%] overflow-crop from top */
-  height: 144%;
+  height: auto;
   object-fit: cover;
   object-position: top left;
   display: block;
