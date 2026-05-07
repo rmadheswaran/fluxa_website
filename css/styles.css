@@ -598,6 +598,7 @@ button { cursor: pointer; }
 .step-images {
   position: relative;
   width: 100%;
+  height:736px;
   max-width: 32.4375rem;
   align-self: center;
   /* Maintains Figma's 519×525 aspect ratio */
