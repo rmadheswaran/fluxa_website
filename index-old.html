@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fluxa UI — Figma plugin that auto-generates design tokens, typography, and 200+ components so you can skip the setup and ship faster.">
+  <title>Fluxa UI — Skip the Setup. Start Designing Faster.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+
+      <a href="#" class="navbar__logo" aria-label="Fluxa UI — Home">
+        <div class="navbar__logo-icon" aria-hidden="true"></div>
+        <span class="navbar__logo-text">Fluxa UI</span>
+      </a>
+
+      <nav class="navbar__menu" id="nav-menu" role="navigation" aria-label="Main navigation">
+        <a href="#components"    class="navbar__link">Component</a>
+        <a href="#how-it-works"  class="navbar__link">How it Works</a>
+        <a href="#pricing"       class="navbar__link">Pricing</a>
+        <a href="#docs"          class="navbar__link">Docs</a>
+      </nav>
+
+      <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
+         class="btn btn--dark navbar__cta">
+        <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
+             alt="" class="btn__icon" aria-hidden="true">
+        Install Plugin
+      </a>
+
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false"
+              aria-controls="nav-menu" id="hamburger-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div class="navbar__drawer" id="mobile-drawer" aria-hidden="true">
+      <nav aria-label="Mobile navigation">
+        <a href="#components"    class="navbar__drawer-link">Component</a>
+        <a href="#how-it-works"  class="navbar__drawer-link">How it Works</a>
+        <a href="#pricing"       class="navbar__drawer-link">Pricing</a>
+        <a href="#docs"          class="navbar__drawer-link">Docs</a>
+        <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
+           class="btn btn--dark btn--full navbar__drawer-cta">
+          <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
+               alt="" class="btn__icon" aria-hidden="true">
+          Install Plugin
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container hero__inner">
+
+        <div class="hero__text">
+          <div class="hero__badge">Figma Plugin · v1.0</div>
+
+          <h1 class="hero__heading" id="hero-heading">
+            Skip the Setup.<br>
+            Start <span class="text-gradient">Designing Faster</span>.
+          </h1>
+
+          <p class="hero__desc">
+            From tokens to base components,
+            <span class="text-gradient-desc">Fluxa Plugin</span>
+            sets up the essential building blocks inside Figma so you can skip
+            the repetitive setup and focus on crafting your own scalable design system.
+          </p>
+
+          <div class="hero__cta-group">
+            <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
+               class="btn btn--dark">
+              <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
+                   alt="" class="btn__icon" aria-hidden="true">
+              Install Plugin
+            </a>
+            <a href="#how-it-works" class="btn btn--outline">
+              <img src="https://www.figma.com/api/mcp/asset/e968c19c-bc9c-4ff4-bdd5-e5b20cd371f3"
+                   alt="" class="btn__icon" aria-hidden="true">
+              View Demo
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__screenshot" aria-hidden="true">
+          <img
+            src="assets/fluxa-plugin_ui.png"
+            alt="Fluxa UI Figma plugin interface showing design system setup"
+            class="hero__screenshot-img"
+            loading="eager">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section class="how-it-works" id="how-it-works" aria-labelledby="how-heading">
+      <div class="container how-it-works__inner">
+
+        <div class="section-header">
+          <p class="section-label">HOW IT WORKS</p>
+          <h2 class="section-title" id="how-heading">Four steps to start Design system</h2>
+          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
+        </div>
+
+        <div class="how-it-works__body">
+
+          <!-- Left: Interactive Steps -->
+          <ol class="steps" id="steps-list" aria-label="How Fluxa works">
+
+            <li class="step step--active" data-step="0">
+              <button class="step__trigger" id="step-btn-0"
+                      aria-expanded="true" aria-controls="step-body-0">
+                <div class="step__number-wrap">
+                  <span class="step__number">01</span>
+                </div>
+                <h3 class="step__title">Set Your Brand Identity</h3>
+              </button>
+              <div class="step__progress" aria-hidden="true">
+                <div class="step__progress-bar"></div>
+              </div>
+              <div class="step__body" id="step-body-0">
+                <p class="step__desc">
+                  Input primary and secondary brand colors. Choose palette intensity —
+                  soft, balanced, or strong — to define the character of your system.
+                </p>
+              </div>
+            </li>
+
+            <li class="step" data-step="1">
+              <button class="step__trigger" id="step-btn-1"
+                      aria-expanded="false" aria-controls="step-body-1">
+                <div class="step__number-wrap">
+                  <span class="step__number">02</span>
+                </div>
+                <h3 class="step__title">Auto-Generate Design Tokens</h3>
+              </button>
+              <div class="step__progress" aria-hidden="true">
+                <div class="step__progress-bar"></div>
+              </div>
+              <div class="step__body" id="step-body-1">
+                <p class="step__desc">
+                  Fluxa automatically generates a full color palette (50–900),
+                  modular type scale, and spacing system from your brand colors.
+                </p>
+              </div>
+            </li>
+
+            <li class="step" data-step="2">
+              <button class="step__trigger" id="step-btn-2"
+                      aria-expanded="false" aria-controls="step-body-2">
+                <div class="step__number-wrap">
+                  <span class="step__number">03</span>
+                </div>
+                <h3 class="step__title">Choose Your Components</h3>
+              </button>
+              <div class="step__progress" aria-hidden="true">
+                <div class="step__progress-bar"></div>
+              </div>
+              <div class="step__body" id="step-body-2">
+                <p class="step__desc">
+                  Select component groups: Buttons, Forms, Navigation, Cards,
+                  Layout, and Feedback. Each comes with dozens of
+                  production-ready variants.
+                </p>
+              </div>
+            </li>
+
+            <li class="step" data-step="3">
+              <button class="step__trigger" id="step-btn-3"
+                      aria-expanded="false" aria-controls="step-body-3">
+                <div class="step__number-wrap">
+                  <span class="step__number">04</span>
+                </div>
+                <h3 class="step__title">Ship to Figma Instantly</h3>
+              </button>
+              <div class="step__progress" aria-hidden="true">
+                <div class="step__progress-bar"></div>
+              </div>
+              <div class="step__body" id="step-body-3">
+                <p class="step__desc">
+                  Review your configuration and generate. Fluxa creates organized
+                  pages, components, and variables directly in your Figma file.
+                </p>
+              </div>
+            </li>
+
+          </ol>
+
+          <!-- Right: Dynamic Image Panel -->
+          <div class="step-images" aria-live="polite">
+
+            <div class="step-image step-image--active" data-step="0">
+              <img src="assets/Step-1.png"
+                   alt="Step 1 — Set your brand identity in Fluxa plugin"
+                   loading="lazy">
+            </div>
+
+            <div class="step-image" data-step="1">
+              <img src="assets/Step-2.png"
+                   alt="Step 2 — Auto-generate design tokens"
+                   loading="lazy">
+            </div>
+
+            <div class="step-image" data-step="2">
+              <img src="assets/Step-3.png"
+                   alt="Step 3 — Choose your components"
+                   loading="lazy">
+            </div>
+
+            <div class="step-image" data-step="3">
+              <img src="assets/Step-4.png"
+                   alt="Step 4 — Ship to Figma instantly"
+                   loading="lazy">
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURES ===================== -->
+    <section class="features" id="components" aria-labelledby="features-heading">
+      <div class="container features__inner">
+
+        <div class="section-header">
+          <p class="section-label">Features</p>
+          <h2 class="section-title" id="features-heading">Everything your design system needs</h2>
+          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
+        </div>
+
+        <div class="features__grid">
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">◈</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Smart Color System</h3>
+              <p class="feature-card__desc">
+                Auto-generate full 50–900 palette from any brand color with soft,
+                balanced, or strong intensity modes.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">Tt</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Typography Engine</h3>
+              <p class="feature-card__desc">
+                Modular scale presets — Perfect Fourth, Golden Ratio, Major Third.
+                Full type ramp from xs to 9xl.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">⊞</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Component Generator</h3>
+              <p class="feature-card__desc">
+                200+ component variants across 6 groups. Every component uses
+                your brand tokens automatically.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">⬡</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Design Variables</h3>
+              <p class="feature-card__desc">
+                Auto-populates Figma Variables with all your tokens — colors,
+                typography, spacing — ready to use.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">⌘</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Plug &amp; Play</h3>
+              <p class="feature-card__desc">
+                Works directly inside Figma. No external tools, no exports —
+                everything generates in your file.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon-wrap" aria-hidden="true">
+              <span class="feature-card__icon">◷</span>
+            </div>
+            <div>
+              <h3 class="feature-card__title">Instant Output</h3>
+              <p class="feature-card__desc">
+                What used to take weeks now takes minutes. From first click to
+                complete system in under 3 minutes.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRICING ===================== -->
+    <section class="pricing" id="pricing" aria-labelledby="pricing-heading">
+      <div class="container pricing__inner">
+
+        <div class="section-header">
+          <p class="section-label">Pricing</p>
+          <h2 class="section-title" id="pricing-heading">Simple, transparent pricing</h2>
+          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
+        </div>
+
+        <div class="pricing__cards">
+
+          <!-- Free Plan -->
+          <div class="pricing-card" aria-label="Free plan">
+            <div class="pricing-card__body">
+              <div class="pricing-card__header">
+                <p class="pricing-card__tier">Free</p>
+                <p class="pricing-card__price">$0</p>
+              </div>
+              <p class="pricing-card__tagline">Perfect for exploring and personal projects.</p>
+              <ul class="pricing-card__features" aria-label="Free plan includes">
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Basic color tokens
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Typography scale
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Up to 3 component groups
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Spacing system
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Community support
+                </li>
+              </ul>
+            </div>
+            <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
+               class="btn btn--outline btn--full">
+              Get Started Free
+            </a>
+          </div>
+
+          <!-- Pro Plan -->
+          <div class="pricing-card pricing-card--pro" aria-label="Pro plan — most popular">
+            <div class="pricing-card__badge" aria-hidden="true">Most Popular</div>
+            <div class="pricing-card__body">
+              <div class="pricing-card__header">
+                <p class="pricing-card__tier">Pro</p>
+                <div class="pricing-card__price-row">
+                  <p class="pricing-card__price">$12</p>
+                  <p class="pricing-card__period">/month</p>
+                </div>
+              </div>
+              <p class="pricing-card__tagline">For designers and teams building serious products.</p>
+              <ul class="pricing-card__features" aria-label="Pro plan includes">
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Full design system generation
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  All 6 component groups
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  200+ component variants
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Advanced scale ratios
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Priority support
+                </li>
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check" aria-hidden="true">✓</span>
+                  Lifetime updates
+                </li>
+              </ul>
+            </div>
+            <a href="#" class="btn btn--dark btn--full">Upgrade to Pro</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ / CONTACT CTA ===================== -->
+    <section class="faq" aria-labelledby="faq-heading">
+      <div class="container faq__inner">
+        <div class="faq__logo-mark" aria-hidden="true"></div>
+        <p class="section-label">Ask us anything</p>
+        <h2 class="faq__heading" id="faq-heading">
+          Any question about<br>Fluxa Plugin?
+        </h2>
+        <p class="faq__desc">
+          If you have any questions or need support, feel free to get in touch or email.
+        </p>
+        <a href="mailto:er.madheswaran1901@gmail.com" class="btn btn--dark">Email Us</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__inner">
+      <div class="footer__copy-block">
+        <p class="footer__copyright">© 2026 Fluxaui.com, All rights reserved.</p>
+        <p class="footer__legal">
+          Fluxs is not affiliated with Figma, nor is it endorsed by or sponsored by Figma.
+          A project by Madhes, crafted with love and coffee at Fluxaui.com.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer links">
+        <a href="#" class="footer__link">FAQs</a>
+        <a href="#" class="footer__link">Changelog</a>
+        <a href="#" class="footer__link">Privacy</a>
+        <a href="#" class="footer__link">Terms</a>
+        <a href="#" class="footer__link">License</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

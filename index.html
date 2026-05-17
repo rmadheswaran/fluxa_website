@@ -1,466 +1,1113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Fluxa UI — Figma plugin that auto-generates design tokens, typography, and 200+ components so you can skip the setup and ship faster.">
-  <title>Fluxa UI — Skip the Setup. Start Designing Faster.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="utf-8">
+<title>Fluxa UI — Skip the setup. Ship the product.</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ─────────── Tokens ─────────── */
+  :root{
+    --ink:#0e0d10;
+    --paper:#fafaf7;
+    --cream:#f3eee2;
+    --cream-2:#ebe6d8;
+    --violet:#5b3df5;
+    --violet-deep:#3b1edb;
+    --lime:#d8ff3a;
+    --pink:#ff6fa8;
+    --blue:#4a8cff;
+    --g100:#ebebe8;
+    --g300:#c6c5bf;
+    --g500:#6b6b65;
+    --g700:#3a3a36;
+    --serif:"Instrument Serif", "Times New Roman", serif;
+    --sans:"Geist", -apple-system, "Segoe UI", sans-serif;
+    --mono:"Geist Mono", ui-monospace, monospace;
+    --shadow:6px 6px 0 var(--ink);
+    --shadow-sm:4px 4px 0 var(--ink);
+    --r:18px;
+    --r-lg:24px;
+    --r-pill:999px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans);
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:16px;
+    line-height:1.5;
+  }
+  ::selection{background:var(--lime);color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ─────────── Reusable atoms ─────────── */
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+  .mono{font-family:var(--mono);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;font-size:12px}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-weight:600;font-size:12px;
+    letter-spacing:0.15em;text-transform:uppercase;color:var(--g500);
+  }
+  .eyebrow::before{content:"";width:24px;height:1.5px;background:currentColor}
+
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-0.02em;line-height:0.98}
+  h1{font-size:clamp(56px,7.0vw,128px);margin:0}
+  h2{font-size:clamp(48px,6.4vw,92px);margin:0;line-height:0.96}
+  h3{font-size:clamp(28px,3vw,38px);margin:0;letter-spacing:-0.01em;line-height:1.05}
+  em{font-style:italic}
+  .accent{color:var(--violet);font-style:italic}
+  .ulime{
+    background:var(--lime);padding:0 12px;border-radius:6px;font-style:italic;
+    box-shadow:3px 3px 0 var(--ink);display:inline-block;line-height:1;
+    transform:rotate(-1deg);
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;border-radius:var(--r-pill);
+    font-weight:600;font-size:15px;border:1.5px solid var(--ink);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn-lime{background:var(--lime);color:var(--ink);box-shadow:var(--shadow-sm)}
+  .btn-lime:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn .arrow{transition:transform .15s ease}
+  .btn:hover .arrow{transform:translateX(3px)}
+
+  /* ─────────── NAV ─────────── */
+  .nav{
+    position:sticky;top:0;z-index:30;
+    backdrop-filter:saturate(140%) blur(10px);
+    background:color-mix(in oklab, var(--cream) 86%, transparent);
+    border-bottom:1px solid rgba(14,13,16,0.08);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;gap:24px;
+  }
+  .logo{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-0.4px}
+  .logo-mark{width:34px;height:31px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .logo-mark svg{width:100%;height:100%;display:block}
+  .nav-links{display:flex;gap:6px;align-items:center}
+  .nav-link{
+    padding:8px 14px;border-radius:var(--r-pill);
+    font-size:14.5px;font-weight:500;color:var(--g700);
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-link:hover{background:rgba(14,13,16,0.06);color:var(--ink)}
+  .nav-link.active{background:var(--ink);color:var(--paper)}
+  .nav-cta{display:flex;gap:10px;align-items:center}
+
+  @media (max-width:880px){
+    .nav-links{display:none}
+  }
+
+  /* ─────────── HERO ─────────── */
+  .hero{position:relative;padding:80px 0 120px;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(var(--g300) 1.2px, transparent 1.2px);
+    background-size:30px 30px;opacity:.45;mask-image:linear-gradient(180deg, transparent 0, #000 30%, #000 70%, transparent 100%);
+  }
+  .hero-grid{
+    position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center;
+  }
+  @media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+
+  .pill{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:6px 6px 6px 14px;border-radius:var(--r-pill);
+    background:#fff;border:1.5px solid var(--ink);
+    box-shadow:var(--shadow-sm);font-size:13px;font-weight:600;
+    margin-bottom:24px;
+  }
+  .pill-dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(216,255,58,0.4)}
+  .pill-chip{
+    background:var(--ink);color:var(--paper);
+    padding:4px 10px;border-radius:var(--r-pill);font-size:11px;letter-spacing:0.05em;
+  }
+
+  .hero-sub{
+    margin:28px 0 32px;font-size:18px;line-height:1.5;color:var(--g700);max-width:520px;
+  }
+  .hero-sub b{color:var(--ink);font-weight:600}
+
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
+
+  .hero-meta{display:flex;gap:28px;flex-wrap:wrap;color:var(--g500);font-size:13px}
+  .hero-meta b{color:var(--ink);font-weight:700;display:block;font-size:24px;font-family:var(--serif);line-height:1}
+  .hero-meta .meta-item{display:flex;flex-direction:column;gap:4px}
+
+  /* Hero plugin window */
+  .plugin-window{
+    background:#fff;border:1.5px solid var(--ink);border-radius:var(--r-lg);
+    box-shadow:8px 8px 0 var(--ink);overflow:hidden;
+    transform:rotate(1.5deg);transition:transform .3s ease;
+  }
+  .plugin-window:hover{transform:rotate(0deg)}
+  .pw-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 14px;background:var(--ink);color:var(--paper);
+  }
+  .pw-bar-left{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;font-family:var(--mono)}
+  .pw-bar-dots{display:flex;gap:6px}
+  .pw-bar-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.18)}
+  .pw-bar-dots span:first-child{background:var(--lime)}
+  .pw-body{padding:22px}
+  .pw-steps{display:flex;align-items:center;gap:0;margin-bottom:22px;padding:0 4px}
+  .pw-step{
+    display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;
+    font-size:11px;font-weight:600;color:var(--g500);
+  }
+  .pw-step .n{
+    width:28px;height:28px;border-radius:50%;border:1.5px solid var(--g300);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:#fff;
+  }
+  .pw-step.active .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .pw-step.active{color:var(--ink)}
+  .pw-line{flex:0 0 28px;height:1.5px;background:var(--g300);margin-top:14px}
+  .pw-label{
+    font-size:13px;font-weight:600;margin:18px 0 10px;display:flex;justify-content:space-between;color:var(--g700)
+  }
+  .pw-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pw-color-input{
+    display:flex;align-items:center;gap:8px;padding:10px 12px;
+    border:1.5px solid var(--ink);border-radius:10px;background:#fff;
+    font-family:var(--mono);font-size:12px;font-weight:500;
+  }
+  .pw-color-input .sw{width:18px;height:18px;border-radius:5px}
+  .pw-palette{display:flex;height:22px;margin-top:12px;border-radius:6px;overflow:hidden;border:1px solid var(--g300)}
+  .pw-palette span{flex:1}
+  .pw-intensity{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  .pw-intensity .opt{
+    padding:10px;border:1.5px solid var(--g300);border-radius:10px;font-size:12px;text-align:center;
+    background:#fff;
+  }
+  .pw-intensity .opt.on{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+  .pw-intensity .opt small{display:block;color:var(--g500);font-size:10px;margin-top:2px}
+  .pw-typo-display{
+    margin-top:14px;padding:18px;background:var(--cream);border-radius:12px;
+    font-family:var(--serif);font-size:46px;line-height:1;letter-spacing:-1px;
+  }
+  .pw-typo-display small{font-family:var(--mono);font-size:11px;color:var(--g500);display:block;margin-top:8px;letter-spacing:0.06em;text-transform:uppercase}
+  .pw-foot{display:flex;justify-content:space-between;padding:14px 22px;background:var(--cream-2);border-top:1.5px solid var(--ink)}
+  .pw-foot .pf-btn-ghost{font-size:13px;font-weight:500;color:var(--g500)}
+  .pw-foot .pf-btn{
+    padding:8px 18px;background:var(--ink);color:var(--paper);border-radius:var(--r-pill);
+    font-size:13px;font-weight:600;
+  }
+
+  /* floating chip near hero plugin window */
+  .float-chip{
+    position:absolute;display:inline-flex;align-items:center;gap:6px;
+    background:var(--lime);color:var(--ink);padding:8px 14px;border-radius:var(--r-pill);
+    font-size:13px;font-weight:700;border:1.5px solid var(--ink);box-shadow:var(--shadow-sm);
+    z-index:2;
+  }
+  .float-chip-1{top:-22px;left:-22px;transform:rotate(-6deg);background:var(--violet);color:#fff}
+  .float-chip-2{bottom:34px;right:-30px;transform:rotate(5deg)}
+
+  /* ─────────── SECTION shared ─────────── */
+  section{padding:120px 0;position:relative}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 64px}
+  .section-head .eyebrow{margin-bottom:18px}
+  .section-head p{margin:18px auto 0;color:var(--g500);font-size:18px;line-height:1.55;max-width:560px}
+
+  /* ─────────── HOW IT WORKS ─────────── */
+  .how{background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);border-top:1.5px solid rgba(14,13,16,0.08);border-bottom:1.5px solid rgba(14,13,16,0.08)}
+  .how-grid{
+    display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start;
+  }
+  @media (max-width:980px){.how-grid{grid-template-columns:1fr}}
+
+  .steps{display:flex;flex-direction:column;gap:0}
+  .step{
+    display:flex;gap:20px;padding:24px 0;border-bottom:1px solid rgba(14,13,16,0.08);
+    cursor:pointer;
+  }
+  .step:last-child{border-bottom:none}
+  .step-n{
+    width:42px;height:42px;border-radius:12px;flex-shrink:0;
+    border:1.5px solid var(--ink);background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:700;font-size:14px;
+    transition:all .2s ease;
+  }
+  .step.on .step-n{background:var(--ink);color:var(--paper);box-shadow:var(--shadow-sm)}
+  .step-body h3{font-family:var(--sans);font-size:22px;font-weight:600;letter-spacing:-0.3px;line-height:1.2}
+  .step-body p{margin:8px 0 0;color:var(--g500);font-size:15px;line-height:1.5;max-width:380px;display:none}
+  .step.on .step-body p{display:block}
+  .step.on .step-body h3{color:var(--ink)}
+
+  /* ─────────── FEATURES ─────────── */
+  .features-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  @media (max-width:980px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.features-grid{grid-template-columns:1fr}}
+
+  .feature{
+    position:relative;padding:28px;border-radius:var(--r-lg);
+    background:#fff;border:1.5px solid var(--ink);
+    box-shadow:var(--shadow);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .feature:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+  .feature-tag{
+    position:absolute;top:-12px;right:18px;
+    padding:4px 10px;border-radius:var(--r-pill);
+    background:var(--ink);color:var(--paper);
+    font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.08em;
+  }
+  .feature-icon{
+    width:52px;height:52px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;border:1.5px solid var(--ink);
+  }
+  .feature-icon.lime{background:var(--lime)}
+  .feature-icon.violet{background:var(--violet);color:#fff}
+  .feature-icon.pink{background:var(--pink);color:#fff}
+  .feature-icon.blue{background:var(--blue);color:#fff}
+  .feature-icon.cream{background:var(--cream)}
+  .feature-icon.ink{background:var(--ink);color:var(--lime)}
+  .feature h3{font-family:var(--sans);font-size:22px;font-weight:600;letter-spacing:-0.3px;margin-bottom:8px;line-height:1.2}
+  .feature p{margin:0;font-size:14.5px;color:var(--g500);line-height:1.55}
+
+  /* highlighted feature spanning */
+  .feature-hero{
+    grid-column:span 2;background:var(--ink);color:var(--paper);
+    display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:center;
+    padding:36px;
+  }
+  @media (max-width:640px){.feature-hero{grid-column:span 1;grid-template-columns:1fr}}
+  .feature-hero h3{color:var(--paper);font-family:var(--serif);font-size:38px;font-weight:400;letter-spacing:-0.5px;line-height:1.05}
+  .feature-hero p{color:rgba(250,250,247,0.7)}
+  .feature-hero .acc{color:var(--lime);font-style:italic}
+  .feature-hero-preview{
+    background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:14px;padding:18px;font-family:var(--mono);font-size:12px;
+    color:var(--lime);
+  }
+  .feature-hero-preview .row{display:flex;gap:10px;align-items:center;padding:6px 0}
+  .feature-hero-preview .row .ck{color:var(--lime)}
+
+  /* ─────────── COMPONENTS SHOWCASE ─────────── */
+  .showcase{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+  .showcase::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(250,250,247,0.06) 1.2px, transparent 1.2px);
+    background-size:30px 30px;
+  }
+  .showcase .section-head{position:relative}
+  .showcase .eyebrow{color:var(--lime)}
+  .showcase h2{color:var(--paper)}
+  .showcase .section-head p{color:rgba(250,250,247,0.6)}
+
+  .showcase-grid{
+    position:relative;display:grid;
+    grid-template-columns:repeat(4, 1fr);gap:16px;
+  }
+  @media (max-width:980px){.showcase-grid{grid-template-columns:repeat(2,1fr)}}
+
+  .show-card{
+    background:var(--cream);color:var(--ink);
+    border-radius:var(--r-lg);padding:24px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    min-height:180px;border:1.5px solid var(--ink);
+    box-shadow:var(--shadow-sm);
+    transition:transform .2s ease;
+  }
+  .show-card:hover{transform:translateY(-4px)}
+  .show-card .label{
+    font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--g500);
+  }
+  .show-card.dark{background:#1c1a1f;color:var(--paper);border-color:rgba(250,250,247,0.15)}
+  .show-card.dark .label{color:rgba(250,250,247,0.45)}
+
+  /* tiny mock components inside showcase */
+  .m-btn{padding:9px 16px;border-radius:var(--r-pill);background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+  .m-btn.violet{background:var(--violet)}
+  .m-input{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;background:#fff;border:1.5px solid var(--ink);font-size:12px;font-weight:500;box-shadow:3px 3px 0 var(--ink)}
+  .m-badge{padding:3px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:700;background:var(--lime);color:var(--ink)}
+  .m-tabs{display:inline-flex;background:#fff;padding:4px;border-radius:var(--r-pill);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:12px}
+  .m-tabs span{padding:6px 12px;border-radius:var(--r-pill)}
+  .m-tabs span.on{background:var(--ink);color:var(--paper)}
+  .m-avs{display:inline-flex}
+  .m-avs span{
+    width:30px;height:30px;border-radius:50%;border:2px solid var(--cream);
+    display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;
+  }
+  .m-avs span:not(:first-child){margin-left:-8px}
+  .m-card-mini{padding:12px;background:#fff;border:1.5px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);min-width:120px}
+  .m-card-mini .v{font-size:22px;font-weight:700;letter-spacing:-0.4px}
+  .m-card-mini .l{font-size:10px;color:var(--g500);font-weight:600}
+  .m-toggle{width:42px;height:24px;border-radius:99px;background:var(--ink);padding:3px;display:inline-flex;justify-content:flex-end}
+  .m-toggle span{width:18px;height:18px;border-radius:50%;background:var(--lime)}
+  .m-progress{width:130px;height:8px;border-radius:99px;background:var(--g100);overflow:hidden;border:1.5px solid var(--ink)}
+  .m-progress span{display:block;height:100%;width:70%;background:var(--violet)}
+  .m-check{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+  .m-check .b{width:18px;height:18px;border-radius:5px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
+  .m-modal{padding:14px;background:#fff;border:1.5px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);max-width:170px}
+  .m-modal-icon{width:30px;height:30px;border-radius:9px;background:var(--lime);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+  .m-modal-title{font-size:14px;font-weight:700;letter-spacing:-0.2px}
+  .m-modal-body{font-size:11px;color:var(--g500);margin-top:3px}
+
+  /* ─────────── PRICING ─────────── */
+  .pricing{position:relative}
+  .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:920px;margin:0 auto}
+  @media (max-width:760px){.price-grid{grid-template-columns:1fr}}
+  .price{
+    background:#fff;border:1.5px solid var(--ink);border-radius:var(--r-lg);
+    box-shadow:var(--shadow);padding:36px;position:relative;
+    display:flex;flex-direction:column;
+  }
+  .price-popular{background:var(--ink);color:var(--paper)}
+  .price-popular .price-feat li{color:rgba(250,250,247,0.85)}
+  .price-popular .price-feat li .ck{color:var(--lime)}
+  .price-popular .price-cta{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+  .price-tag{
+    position:absolute;top:-14px;right:24px;
+    background:var(--lime);color:var(--ink);
+    padding:6px 12px;border-radius:var(--r-pill);
+    font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.08em;
+    border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+    transform:rotate(3deg);
+  }
+  .price-name{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--g500);margin-bottom:14px}
+  .price-popular .price-name{color:rgba(250,250,247,0.55)}
+  .price-amount{font-family:var(--serif);font-size:76px;font-weight:400;line-height:1;letter-spacing:-0.04em}
+  .price-amount small{font-family:var(--sans);font-size:16px;font-weight:500;color:var(--g500);margin-left:6px;letter-spacing:0}
+  .price-popular .price-amount small{color:rgba(250,250,247,0.6)}
+  .price-desc{margin:14px 0 22px;font-size:14.5px;color:var(--g500);line-height:1.5}
+  .price-popular .price-desc{color:rgba(250,250,247,0.65)}
+  .price-feat{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;flex:1}
+  .price-feat li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px}
+  .price-feat .ck{
+    flex-shrink:0;margin-top:2px;width:20px;height:20px;border-radius:50%;
+    background:var(--lime);color:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--ink);font-size:11px;
+  }
+  .price-cta{
+    margin-top:28px;display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 22px;border-radius:var(--r-pill);
+    background:#fff;border:1.5px solid var(--ink);font-weight:600;font-size:15px;
+    transition:transform .15s ease;
+  }
+  .price-cta:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-sm)}
+
+  /* ─────────── FAQ ─────────── */
+  .faq{background:var(--cream-2);border-top:1.5px solid rgba(14,13,16,0.08)}
+  .faq-grid{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{
+    background:#fff;border:1.5px solid var(--ink);border-radius:16px;
+    box-shadow:var(--shadow-sm);overflow:hidden;
+    transition:transform .15s ease;
+  }
+  .faq-item:hover{transform:translate(-2px,-2px)}
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:20px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    font-size:17px;font-weight:600;letter-spacing:-0.2px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-icon{
+    width:30px;height:30px;border-radius:50%;background:var(--cream);
+    border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;font-size:18px;line-height:1;transition:transform .2s ease, background .2s ease;
+  }
+  .faq-item[open] .faq-icon{transform:rotate(45deg);background:var(--lime)}
+  .faq-body{padding:0 24px 22px;color:var(--g500);font-size:15px;line-height:1.6}
+
+  /* ─────────── CTA banner ─────────── */
+  .cta{padding:60px 0 120px}
+  .cta-card{
+    background:var(--ink);color:var(--paper);border-radius:32px;
+    padding:80px 56px;text-align:center;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .cta-card::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(250,250,247,0.07) 1.2px, transparent 1.2px);
+    background-size:24px 24px;pointer-events:none;
+  }
+  .cta-card h2{color:var(--paper);max-width:14ch;margin:0 auto;position:relative}
+  .cta-card h2 em{color:var(--lime)}
+  .cta-card .cta-sub{color:rgba(250,250,247,0.65);margin:20px auto 36px;max-width:480px;font-size:17px;position:relative}
+  .cta-card .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+  .cta-card .btn-lime{border-color:var(--lime)}
+  .cta-card .btn-ghost{color:var(--paper);border-color:rgba(250,250,247,0.3)}
+  .cta-card .btn-ghost:hover{background:rgba(250,250,247,0.1);color:var(--paper)}
+
+  /* ─────────── FOOTER ─────────── */
+  footer{background:var(--ink);color:rgba(250,250,247,0.7);padding:64px 0 28px}
+  .foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+  @media (max-width:760px){.foot-top{grid-template-columns:1fr 1fr;gap:32px}}
+  .foot-brand .logo{color:var(--paper);margin-bottom:14px}
+  .foot-brand p{font-size:14px;line-height:1.6;max-width:300px;margin:0}
+  .foot-col h4{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--lime);margin:0 0 18px}
+  .foot-col a{display:block;padding:6px 0;font-size:14.5px;color:rgba(250,250,247,0.7);transition:color .15s ease}
+  .foot-col a:hover{color:var(--lime)}
+  .foot-bot{
+    border-top:1px solid rgba(250,250,247,0.1);padding-top:24px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    font-size:13px;color:rgba(250,250,247,0.5);
+  }
+  .foot-bot a:hover{color:var(--lime)}
+</style>
 </head>
 <body>
 
-  <!-- ===================== NAVBAR ===================== -->
-  <header class="navbar" role="banner">
-    <div class="container navbar__inner">
+<!-- ─────────── NAV ─────────── -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark">
+        <!-- <svg viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="fl-grad" x1="73.5" y1="108.5" x2="109" y2="24.5" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FE6113"/>
+              <stop offset="0.255" stop-color="#FE3151"/>
+              <stop offset="0.514" stop-color="#DD48DD"/>
+              <stop offset="0.731" stop-color="#8168E5"/>
+              <stop offset="1" stop-color="#0048FF"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#fl-grad)" stroke="url(#fl-grad)">
+            <rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke-width="4" fill="none"/>
+            <rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)" stroke="none"/>
+            <path d="M39.598 33.941C36.4738 30.8168 36.4738 25.7515 39.598 22.6273L56.5685 5.65676C59.6927 2.53257 64.758 2.53257 67.8822 5.65676L84.8528 22.6273C87.977 25.7515 87.977 30.8168 84.8528 33.941L67.8822 50.9116C64.758 54.0358 59.6927 54.0358 56.5685 50.9116L39.598 33.941Z" stroke="none"/>
+            <rect x="33.9411" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9411 96.1665)" stroke="none"/>
+            <path d="M93.0281 54.2745C95.8129 55.6206 98.2339 56.3874 100.739 56.3874C103.244 56.3874 105.665 55.621 108.45 54.2745C107.106 57.0641 106.341 59.489 106.341 61.9984C106.341 64.508 107.105 66.9336 108.449 69.7236C105.664 68.3779 103.244 67.6121 100.739 67.6121C98.2337 67.6121 95.8122 68.3783 93.0267 69.725C94.3704 66.9353 95.1367 64.5106 95.1371 62.0011C95.1374 59.4911 94.3721 57.0651 93.0281 54.2745Z" stroke="none"/>
+          </g>
+        </svg> -->
+        <svg width="136" height="125" viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke="#0E0D10" stroke-width="4"/>
+<rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)" fill="#0E0D10"/>
+<path d="M39.598 33.9412C36.4738 30.817 36.4738 25.7516 39.598 22.6274L56.5686 5.65688C59.6928 2.53269 64.7581 2.53269 67.8823 5.65689L84.8528 22.6274C87.977 25.7516 87.977 30.817 84.8528 33.9412L67.8823 50.9117C64.7581 54.0359 59.6928 54.0359 56.5686 50.9117L39.598 33.9412Z" fill="#0E0D10"/>
+<rect x="33.9412" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9412 96.1665)" fill="#0E0D10"/>
+<path d="M111.16 50.5667C102.2 55.6593 99.2778 55.6579 90.3187 50.5678C90.0338 50.4059 89.6771 50.4548 89.4461 50.6862C89.2151 50.9176 89.1664 51.275 89.328 51.5603C94.4102 60.5371 94.4085 63.4644 89.3268 72.4407C89.1651 72.7261 89.2152 73.0822 89.4461 73.3136C89.6771 73.545 90.0338 73.5938 90.3174 73.4331C99.2782 68.3405 102.2 68.3418 111.159 73.4319C111.444 73.5939 111.801 73.545 112.032 73.3136C112.263 73.0822 112.311 72.7248 112.15 72.4394C107.068 63.4626 107.069 60.5353 112.151 51.559C112.313 51.2736 112.263 50.9176 112.032 50.6862C111.801 50.4548 111.444 50.406 111.16 50.5667Z" fill="#0E0D10"/>
+</svg>
 
-      <a href="#" class="navbar__logo" aria-label="Fluxa UI — Home">
-        <div class="navbar__logo-icon" aria-hidden="true"></div>
-        <span class="navbar__logo-text">Fluxa UI</span>
+      </span>
+      Fluxa UI
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#how">How it works</a>
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#components">Components</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <a class="nav-link" href="#docs">Docs</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#">
+      <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="white" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="white"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="white"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="white"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="white"/>
+</svg>
+Install Plugin
       </a>
-
-      <nav class="navbar__menu" id="nav-menu" role="navigation" aria-label="Main navigation">
-        <a href="#components"    class="navbar__link">Component</a>
-        <a href="#how-it-works"  class="navbar__link">How it Works</a>
-        <a href="#pricing"       class="navbar__link">Pricing</a>
-        <a href="#docs"          class="navbar__link">Docs</a>
-      </nav>
-
-      <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
-         class="btn btn--dark navbar__cta">
-        <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
-             alt="" class="btn__icon" aria-hidden="true">
-        Install Plugin
-      </a>
-
-      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false"
-              aria-controls="nav-menu" id="hamburger-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
     </div>
+  </div>
+</header>
 
-    <!-- Mobile nav drawer -->
-    <div class="navbar__drawer" id="mobile-drawer" aria-hidden="true">
-      <nav aria-label="Mobile navigation">
-        <a href="#components"    class="navbar__drawer-link">Component</a>
-        <a href="#how-it-works"  class="navbar__drawer-link">How it Works</a>
-        <a href="#pricing"       class="navbar__drawer-link">Pricing</a>
-        <a href="#docs"          class="navbar__drawer-link">Docs</a>
-        <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
-           class="btn btn--dark btn--full navbar__drawer-cta">
-          <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
-               alt="" class="btn__icon" aria-hidden="true">
+<!-- ─────────── HERO ─────────── -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill">
+        <span class="pill-dot"></span>
+        Figma Plugin
+        <span class="pill-chip">v1.0</span>
+      </span>
+      <h1>
+        Skip the setup.<br>
+        Ship the <span class="ulime">product.</span>
+      </h1>
+      <p class="hero-sub">
+        From <b>tokens to base components</b>, Fluxa sets up the building blocks
+        inside Figma — so you can skip repetitive setup and focus on crafting
+        your <b>own scalable design system</b>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#">
+          <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="white" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="white"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="white"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="white"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="white"/>
+</svg>
+
           Install Plugin
+          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
         </a>
-      </nav>
+        <a class="btn btn-ghost" href="#">View Demo</a>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-item"><b>200+</b><span>Component variants</span></div>
+        <div class="meta-item"><b>50→900</b><span>Auto color scale</span></div>
+        <div class="meta-item"><b>&lt;3min</b><span>Setup to ship</span></div>
+      </div>
     </div>
-  </header>
 
-  <main>
-
-    <!-- ===================== HERO ===================== -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container hero__inner">
-
-        <div class="hero__text">
-          <div class="hero__badge">Figma Plugin · v1.0</div>
-
-          <h1 class="hero__heading" id="hero-heading">
-            Skip the Setup.<br>
-            Start <span class="text-gradient">Designing Faster</span>.
-          </h1>
-
-          <p class="hero__desc">
-            From tokens to base components,
-            <span class="text-gradient-desc">Fluxa Plugin</span>
-            sets up the essential building blocks inside Figma so you can skip
-            the repetitive setup and focus on crafting your own scalable design system.
-          </p>
-
-          <div class="hero__cta-group">
-            <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
-               class="btn btn--dark">
-              <img src="https://www.figma.com/api/mcp/asset/6a66cc2c-f765-49e2-b0db-e087eeac44c9"
-                   alt="" class="btn__icon" aria-hidden="true">
-              Install Plugin
-            </a>
-            <a href="#how-it-works" class="btn btn--outline">
-              <img src="https://www.figma.com/api/mcp/asset/e968c19c-bc9c-4ff4-bdd5-e5b20cd371f3"
-                   alt="" class="btn__icon" aria-hidden="true">
-              View Demo
-            </a>
+    <div style="position:relative">
+      <span class="float-chip float-chip-1">✦ Inside Figma</span>
+      <span class="float-chip float-chip-2">Auto layout ✓</span>
+      <div class="plugin-window">
+        <div class="pw-bar">
+          <div class="pw-bar-left">
+            <span class="pw-bar-dots"><span></span><span></span><span></span></span>
+            Design System Component Generator
           </div>
+          <span style="opacity:0.5">×</span>
         </div>
-
-        <div class="hero__screenshot" aria-hidden="true">
-          <img
-            src="assets/fluxa-plugin_ui.png"
-            alt="Fluxa UI Figma plugin interface showing design system setup"
-            class="hero__screenshot-img"
-            loading="eager">
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ===================== HOW IT WORKS ===================== -->
-    <section class="how-it-works" id="how-it-works" aria-labelledby="how-heading">
-      <div class="container how-it-works__inner">
-
-        <div class="section-header">
-          <p class="section-label">HOW IT WORKS</p>
-          <h2 class="section-title" id="how-heading">Four steps to start Design system</h2>
-          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
-        </div>
-
-        <div class="how-it-works__body">
-
-          <!-- Left: Interactive Steps -->
-          <ol class="steps" id="steps-list" aria-label="How Fluxa works">
-
-            <li class="step step--active" data-step="0">
-              <button class="step__trigger" id="step-btn-0"
-                      aria-expanded="true" aria-controls="step-body-0">
-                <div class="step__number-wrap">
-                  <span class="step__number">01</span>
-                </div>
-                <h3 class="step__title">Set Your Brand Identity</h3>
-              </button>
-              <div class="step__progress" aria-hidden="true">
-                <div class="step__progress-bar"></div>
-              </div>
-              <div class="step__body" id="step-body-0">
-                <p class="step__desc">
-                  Input primary and secondary brand colors. Choose palette intensity —
-                  soft, balanced, or strong — to define the character of your system.
-                </p>
-              </div>
-            </li>
-
-            <li class="step" data-step="1">
-              <button class="step__trigger" id="step-btn-1"
-                      aria-expanded="false" aria-controls="step-body-1">
-                <div class="step__number-wrap">
-                  <span class="step__number">02</span>
-                </div>
-                <h3 class="step__title">Auto-Generate Design Tokens</h3>
-              </button>
-              <div class="step__progress" aria-hidden="true">
-                <div class="step__progress-bar"></div>
-              </div>
-              <div class="step__body" id="step-body-1">
-                <p class="step__desc">
-                  Fluxa automatically generates a full color palette (50–900),
-                  modular type scale, and spacing system from your brand colors.
-                </p>
-              </div>
-            </li>
-
-            <li class="step" data-step="2">
-              <button class="step__trigger" id="step-btn-2"
-                      aria-expanded="false" aria-controls="step-body-2">
-                <div class="step__number-wrap">
-                  <span class="step__number">03</span>
-                </div>
-                <h3 class="step__title">Choose Your Components</h3>
-              </button>
-              <div class="step__progress" aria-hidden="true">
-                <div class="step__progress-bar"></div>
-              </div>
-              <div class="step__body" id="step-body-2">
-                <p class="step__desc">
-                  Select component groups: Buttons, Forms, Navigation, Cards,
-                  Layout, and Feedback. Each comes with dozens of
-                  production-ready variants.
-                </p>
-              </div>
-            </li>
-
-            <li class="step" data-step="3">
-              <button class="step__trigger" id="step-btn-3"
-                      aria-expanded="false" aria-controls="step-body-3">
-                <div class="step__number-wrap">
-                  <span class="step__number">04</span>
-                </div>
-                <h3 class="step__title">Ship to Figma Instantly</h3>
-              </button>
-              <div class="step__progress" aria-hidden="true">
-                <div class="step__progress-bar"></div>
-              </div>
-              <div class="step__body" id="step-body-3">
-                <p class="step__desc">
-                  Review your configuration and generate. Fluxa creates organized
-                  pages, components, and variables directly in your Figma file.
-                </p>
-              </div>
-            </li>
-
-          </ol>
-
-          <!-- Right: Dynamic Image Panel -->
-          <div class="step-images" aria-live="polite">
-
-            <div class="step-image step-image--active" data-step="0">
-              <img src="assets/Step-1.png"
-                   alt="Step 1 — Set your brand identity in Fluxa plugin"
-                   loading="lazy">
-            </div>
-
-            <div class="step-image" data-step="1">
-              <img src="assets/Step-2.png"
-                   alt="Step 2 — Auto-generate design tokens"
-                   loading="lazy">
-            </div>
-
-            <div class="step-image" data-step="2">
-              <img src="assets/Step-3.png"
-                   alt="Step 3 — Choose your components"
-                   loading="lazy">
-            </div>
-
-            <div class="step-image" data-step="3">
-              <img src="assets/Step-4.png"
-                   alt="Step 4 — Ship to Figma instantly"
-                   loading="lazy">
-            </div>
-
+        <div class="pw-body">
+          <div class="pw-steps">
+            <div class="pw-step active"><div class="n">1</div>Brand</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">2</div>Tokens</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">3</div>Components</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">4</div>Generate</div>
           </div>
 
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== FEATURES ===================== -->
-    <section class="features" id="components" aria-labelledby="features-heading">
-      <div class="container features__inner">
-
-        <div class="section-header">
-          <p class="section-label">Features</p>
-          <h2 class="section-title" id="features-heading">Everything your design system needs</h2>
-          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
-        </div>
-
-        <div class="features__grid">
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">◈</span>
+          <div class="pw-label"><span>Brand Colors</span></div>
+          <div class="pw-row">
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Primary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#5b3df5"></span> #5B3DF5</div>
             </div>
             <div>
-              <h3 class="feature-card__title">Smart Color System</h3>
-              <p class="feature-card__desc">
-                Auto-generate full 50–900 palette from any brand color with soft,
-                balanced, or strong intensity modes.
-              </p>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Secondary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#ff6fa8"></span> #FF6FA8</div>
             </div>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">Tt</span>
-            </div>
-            <div>
-              <h3 class="feature-card__title">Typography Engine</h3>
-              <p class="feature-card__desc">
-                Modular scale presets — Perfect Fourth, Golden Ratio, Major Third.
-                Full type ramp from xs to 9xl.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">⊞</span>
-            </div>
-            <div>
-              <h3 class="feature-card__title">Component Generator</h3>
-              <p class="feature-card__desc">
-                200+ component variants across 6 groups. Every component uses
-                your brand tokens automatically.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">⬡</span>
-            </div>
-            <div>
-              <h3 class="feature-card__title">Design Variables</h3>
-              <p class="feature-card__desc">
-                Auto-populates Figma Variables with all your tokens — colors,
-                typography, spacing — ready to use.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">⌘</span>
-            </div>
-            <div>
-              <h3 class="feature-card__title">Plug &amp; Play</h3>
-              <p class="feature-card__desc">
-                Works directly inside Figma. No external tools, no exports —
-                everything generates in your file.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-card__icon-wrap" aria-hidden="true">
-              <span class="feature-card__icon">◷</span>
-            </div>
-            <div>
-              <h3 class="feature-card__title">Instant Output</h3>
-              <p class="feature-card__desc">
-                What used to take weeks now takes minutes. From first click to
-                complete system in under 3 minutes.
-              </p>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== PRICING ===================== -->
-    <section class="pricing" id="pricing" aria-labelledby="pricing-heading">
-      <div class="container pricing__inner">
-
-        <div class="section-header">
-          <p class="section-label">Pricing</p>
-          <h2 class="section-title" id="pricing-heading">Simple, transparent pricing</h2>
-          <p class="section-subtitle">The fastest path from brand identity to production-ready design system.</p>
-        </div>
-
-        <div class="pricing__cards">
-
-          <!-- Free Plan -->
-          <div class="pricing-card" aria-label="Free plan">
-            <div class="pricing-card__body">
-              <div class="pricing-card__header">
-                <p class="pricing-card__tier">Free</p>
-                <p class="pricing-card__price">$0</p>
-              </div>
-              <p class="pricing-card__tagline">Perfect for exploring and personal projects.</p>
-              <ul class="pricing-card__features" aria-label="Free plan includes">
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Basic color tokens
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Typography scale
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Up to 3 component groups
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Spacing system
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Community support
-                </li>
-              </ul>
-            </div>
-            <a href="https://www.figma.com/community/plugin/fluxa" target="_blank" rel="noopener noreferrer"
-               class="btn btn--outline btn--full">
-              Get Started Free
-            </a>
+          </div>
+          <div class="pw-palette">
+            <span style="background:#ece7ff"></span>
+            <span style="background:#d4caff"></span>
+            <span style="background:#b3a1ff"></span>
+            <span style="background:#8a72f8"></span>
+            <span style="background:#5b3df5"></span>
+            <span style="background:#4628d0"></span>
+            <span style="background:#3719a8"></span>
+            <span style="background:#280f7c"></span>
+            <span style="background:#190850"></span>
           </div>
 
-          <!-- Pro Plan -->
-          <div class="pricing-card pricing-card--pro" aria-label="Pro plan — most popular">
-            <div class="pricing-card__badge" aria-hidden="true">Most Popular</div>
-            <div class="pricing-card__body">
-              <div class="pricing-card__header">
-                <p class="pricing-card__tier">Pro</p>
-                <div class="pricing-card__price-row">
-                  <p class="pricing-card__price">$12</p>
-                  <p class="pricing-card__period">/month</p>
-                </div>
-              </div>
-              <p class="pricing-card__tagline">For designers and teams building serious products.</p>
-              <ul class="pricing-card__features" aria-label="Pro plan includes">
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Full design system generation
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  All 6 component groups
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  200+ component variants
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Advanced scale ratios
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Priority support
-                </li>
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check" aria-hidden="true">✓</span>
-                  Lifetime updates
-                </li>
-              </ul>
-            </div>
-            <a href="#" class="btn btn--dark btn--full">Upgrade to Pro</a>
+          <div class="pw-intensity">
+            <div class="opt">Soft<small>Muted</small></div>
+            <div class="opt on">Balanced<small>Default</small></div>
+            <div class="opt">Strong<small>Vivid</small></div>
           </div>
 
+          <div class="pw-typo-display">
+            Aa
+            <small>Instrument Serif · 1.333 scale</small>
+          </div>
+        </div>
+        <div class="pw-foot">
+          <span class="pf-btn-ghost">Cancel</span>
+          <span class="pf-btn">Continue</span>
         </div>
       </div>
-    </section>
-
-    <!-- ===================== FAQ / CONTACT CTA ===================== -->
-    <section class="faq" aria-labelledby="faq-heading">
-      <div class="container faq__inner">
-        <div class="faq__logo-mark" aria-hidden="true"></div>
-        <p class="section-label">Ask us anything</p>
-        <h2 class="faq__heading" id="faq-heading">
-          Any question about<br>Fluxa Plugin?
-        </h2>
-        <p class="faq__desc">
-          If you have any questions or need support, feel free to get in touch or email.
-        </p>
-        <a href="mailto:er.madheswaran1901@gmail.com" class="btn btn--dark">Email Us</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <div class="footer__copy-block">
-        <p class="footer__copyright">© 2026 Fluxaui.com, All rights reserved.</p>
-        <p class="footer__legal">
-          Fluxs is not affiliated with Figma, nor is it endorsed by or sponsored by Figma.
-          A project by Madhes, crafted with love and coffee at Fluxaui.com.
-        </p>
-      </div>
-      <nav class="footer__nav" aria-label="Footer links">
-        <a href="#" class="footer__link">FAQs</a>
-        <a href="#" class="footer__link">Changelog</a>
-        <a href="#" class="footer__link">Privacy</a>
-        <a href="#" class="footer__link">Terms</a>
-        <a href="#" class="footer__link">License</a>
-      </nav>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="js/script.js"></script>
+<!-- ─────────── HOW IT WORKS ─────────── -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Four steps from blank<br>file to <em>shipped system</em>.</h2>
+      <p>The fastest path from brand identity to production-ready Figma library — no plugins-on-plugins required.</p>
+    </div>
+
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step on">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <h3>Set your brand identity</h3>
+            <p>Input primary and secondary brand colors. Choose palette intensity — soft, balanced, or strong — to define the character of your system.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <h3>Auto-generate design tokens</h3>
+            <p>50–900 color scales, full type ramps, spacing — all generated from your brand inputs in seconds.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <h3>Choose your components</h3>
+            <p>Pick from 6 component groups. Buttons, inputs, navigation, cards, modals — only generate what you'll use.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <h3>Ship to Figma instantly</h3>
+            <p>Everything lands in your file as auto-layout-ready components with Figma Variables wired up — ready to design with.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embedded plugin preview -->
+      <div class="plugin-window" style="transform:rotate(-1.5deg)">
+        <div class="pw-bar">
+          <div class="pw-bar-left">
+            <span class="pw-bar-dots"><span></span><span></span><span></span></span>
+            Step 1 · Brand
+          </div>
+          <span style="opacity:0.5">×</span>
+        </div>
+        <div class="pw-body">
+          <div class="pw-steps">
+            <div class="pw-step active"><div class="n">1</div>Brand</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">2</div>Tokens</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">3</div>Components</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">4</div>Generate</div>
+          </div>
+          <div class="pw-label"><span>Brand Colors</span></div>
+          <div class="pw-row">
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Primary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#5b3df5"></span> #5B3DF5</div>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Secondary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#4a8cff"></span> #4A8CFF</div>
+            </div>
+          </div>
+          <div class="pw-palette">
+            <span style="background:#ece7ff"></span>
+            <span style="background:#d4caff"></span>
+            <span style="background:#b3a1ff"></span>
+            <span style="background:#8a72f8"></span>
+            <span style="background:#5b3df5"></span>
+            <span style="background:#4628d0"></span>
+            <span style="background:#3719a8"></span>
+            <span style="background:#280f7c"></span>
+            <span style="background:#190850"></span>
+          </div>
+          <div class="pw-intensity">
+            <div class="opt">Soft<small>Muted</small></div>
+            <div class="opt on">Balanced<small>Default</small></div>
+            <div class="opt">Strong<small>Vivid</small></div>
+          </div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--cream);border-radius:10px;font-size:12px;font-family:var(--mono);color:var(--g700);display:flex;justify-content:space-between">
+            <span>The quick brown fox · Aa Bb Cc 1 2 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FEATURES ─────────── -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Features</span>
+      <h2>Everything your<br><em>design system</em> needs.</h2>
+      <p>Built for SaaS, dashboards, AI tools, admin panels — anywhere you'd otherwise rebuild the same primitives.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <!-- hero feature -->
+      <div class="feature feature-hero">
+        <div>
+          <span class="feature-tag" style="background:var(--lime);color:var(--ink)">Flagship</span>
+          <h3>One brand color in.<br><span class="acc">Whole system out.</span></h3>
+          <p>Drop in your primary hex. Fluxa generates a complete 50–900 scale,
+          pairs it with neutrals, builds a type ramp, and wires up every component variant —
+          all using Figma Variables.</p>
+        </div>
+        <div class="feature-hero-preview">
+          <div class="row"><span class="ck">✓</span> Color scale · 9 stops</div>
+          <div class="row"><span class="ck">✓</span> Type scale · xs → 9xl</div>
+          <div class="row"><span class="ck">✓</span> Spacing · 4pt grid</div>
+          <div class="row"><span class="ck">✓</span> Radius · 6 sizes</div>
+          <div class="row"><span class="ck">✓</span> Variables · auto-wired</div>
+          <div class="row"><span class="ck">✓</span> Light + dark · ready</div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon lime">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#0e0d10" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M11 1v2M11 19v2M1 11h2M19 11h2M4 4l1.4 1.4M16.6 16.6L18 18M4 18l1.4-1.4M16.6 5.4L18 4"/></svg>
+        </div>
+        <h3>Smart color system</h3>
+        <p>Auto-generate full 50–900 palettes from any brand color. Soft, balanced, or strong intensity modes.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon violet">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h14M11 5v13M7 18h8"/></svg>
+        </div>
+        <h3>Typography engine</h3>
+        <p>Modular scale presets — Perfect Fourth, Golden Ratio, Major Third. Full ramp from xs to 9xl.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon pink">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/></svg>
+        </div>
+        <h3>200+ components</h3>
+        <p>Across 6 groups. Every component uses your brand tokens automatically — no manual rebinding.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon blue">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><polygon points="11,2 19,7 19,15 11,20 3,15 3,7" fill="none"/><path d="M11 2v18M3 7l16 8M19 7L3 15"/></svg>
+        </div>
+        <h3>Figma Variables</h3>
+        <p>Tokens land as native Figma Variables — colors, typography, spacing — wired and ready to use.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon cream">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#0e0d10" stroke-width="1.8" stroke-linecap="round"><path d="M3 11h16M11 3v16M5 5l12 12M17 5L5 17"/></svg>
+        </div>
+        <h3>Auto-layout ready</h3>
+        <p>Every component ships with proper auto-layout, constraints, and variants. Drop it in. It just works.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon ink">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#d8ff3a" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M11 6v5l3 2"/></svg>
+        </div>
+        <h3>Under 3 minutes</h3>
+        <p>What used to take weeks now takes minutes. From first click to a complete system, ready to design with.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── COMPONENTS SHOWCASE ─────────── -->
+<section class="showcase" id="components">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What you get</span>
+      <h2>A shelf full of <em style="color:var(--lime)">primitives</em>,<br>ready to compose.</h2>
+      <p>Buttons, inputs, badges, tabs, modals, cards, toggles, progress, navigation, date pickers — and a lot more.</p>
+    </div>
+
+    <div class="showcase-grid">
+      <div class="show-card">
+        <div class="label">Button</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          <span class="m-btn">Primary</span>
+          <span class="m-btn violet">Action</span>
+        </div>
+      </div>
+      <div class="show-card">
+        <div class="label">Input</div>
+        <span class="m-input">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="5" r="3"/><path d="M8 8l3 3"/></svg>
+          Search
+        </span>
+      </div>
+      <div class="show-card">
+        <div class="label">Badge</div>
+        <div style="display:flex;gap:6px">
+          <span class="m-badge">New</span>
+          <span class="m-badge" style="background:var(--violet);color:#fff">Pro</span>
+        </div>
+      </div>
+      <div class="show-card">
+        <div class="label">Tabs</div>
+        <span class="m-tabs"><span class="on">Files</span><span>Team</span><span>Logs</span></span>
+      </div>
+
+      <div class="show-card dark">
+        <div class="label">Avatar group</div>
+        <span class="m-avs">
+          <span style="background:#5b3df5">A</span>
+          <span style="background:#ff6fa8">B</span>
+          <span style="background:#4a8cff">C</span>
+          <span style="background:#d8ff3a;color:#0e0d10">+3</span>
+        </span>
+      </div>
+      <div class="show-card dark">
+        <div class="label">Card</div>
+        <div class="m-card-mini">
+          <div class="l">REVENUE</div>
+          <div class="v">$12.4k</div>
+        </div>
+      </div>
+      <div class="show-card dark">
+        <div class="label">Toggle</div>
+        <span class="m-toggle"><span></span></span>
+      </div>
+      <div class="show-card dark">
+        <div class="label">Progress</div>
+        <span class="m-progress"><span></span></span>
+      </div>
+
+      <div class="show-card">
+        <div class="label">Checkbox</div>
+        <span class="m-check"><span class="b">✓</span> Auto layout</span>
+      </div>
+      <div class="show-card" style="grid-column:span 2">
+        <div class="label">Modal</div>
+        <div class="m-modal">
+          <div class="m-modal-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#0e0d10" stroke-width="2.2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
+          </div>
+          <div class="m-modal-title">You're in.</div>
+          <div class="m-modal-body">We'll ping you when Fluxa launches.</div>
+        </div>
+      </div>
+      <div class="show-card">
+        <div class="label">Date picker</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:9px;width:100%;max-width:140px">
+          <div style="text-align:center;color:var(--g500);font-weight:600">M</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">T</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">W</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">T</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">F</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">S</div>
+          <div style="text-align:center;color:var(--g500);font-weight:600">S</div>
+          <!-- 14 days -->
+          <div style="text-align:center;padding:3px 0">1</div>
+          <div style="text-align:center;padding:3px 0">2</div>
+          <div style="text-align:center;padding:3px 0">3</div>
+          <div style="text-align:center;padding:3px 0">4</div>
+          <div style="text-align:center;padding:3px 0">5</div>
+          <div style="text-align:center;padding:3px 0">6</div>
+          <div style="text-align:center;padding:3px 0">7</div>
+          <div style="text-align:center;padding:3px 0">8</div>
+          <div style="text-align:center;padding:3px 0">9</div>
+          <div style="text-align:center;padding:3px 0">10</div>
+          <div style="text-align:center;padding:3px 0;background:#5b3df5;color:#fff;border-radius:50%">11</div>
+          <div style="text-align:center;padding:3px 0">12</div>
+          <div style="text-align:center;padding:3px 0">13</div>
+          <div style="text-align:center;padding:3px 0">14</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── PRICING ─────────── -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Simple, transparent <em>pricing</em>.</h2>
+      <p>Start free. Upgrade when you're ready to ship serious products. Lifetime updates, always.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price">
+        <div class="price-name">Free</div>
+        <div class="price-amount">$0</div>
+        <p class="price-desc">Perfect for exploring and personal projects.</p>
+        <ul class="price-feat">
+          <li><span class="ck">✓</span> Basic color tokens</li>
+          <li><span class="ck">✓</span> Typography scale</li>
+          <li><span class="ck">✓</span> Up to 3 component groups</li>
+          <li><span class="ck">✓</span> Spacing system</li>
+          <li><span class="ck">✓</span> Community support</li>
+        </ul>
+        <a class="price-cta" href="#">Get Started Free</a>
+      </div>
+
+      <div class="price price-popular">
+        <span class="price-tag">Most Popular</span>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$30<small>/month</small></div>
+        <p class="price-desc">For designers and teams building serious products.</p>
+        <ul class="price-feat">
+          <li><span class="ck">✓</span> Full design system generation</li>
+          <li><span class="ck">✓</span> All 6 component groups</li>
+          <li><span class="ck">✓</span> 200+ component variants</li>
+          <li><span class="ck">✓</span> Advanced scale ratios</li>
+          <li><span class="ck">✓</span> Priority support</li>
+          <li><span class="ck">✓</span> Lifetime updates</li>
+        </ul>
+        <a class="price-cta" href="#">
+          Upgrade to Pro
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FAQ ─────────── -->
+<section class="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Ask us anything</span>
+      <h2>Questions about <em>Fluxa</em>.</h2>
+      <p>The most common questions before installing. Can't find what you're looking for? Drop us a line.</p>
+    </div>
+
+    <div class="faq-grid">
+      <details class="faq-item" open>
+        <summary>Is Fluxa affiliated with Figma?
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-body">No. Fluxa is an independent Figma plugin built by Madhes. It's not endorsed by or sponsored by Figma.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I lose my system if I uninstall?
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-body">No. Everything Fluxa generates lives natively in your Figma file as components and variables. The plugin is just the generator — uninstalling doesn't touch your work.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I customize the generated components?
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-body">Absolutely. Every component is built with native Figma Auto Layout and Variables, so you can extend, restyle, or fork anything Fluxa creates.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does the Free plan have a time limit?
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-body">No. The Free plan is free forever — generate tokens, type, spacing, and up to 3 component groups as much as you like.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Does Fluxa support dark mode?
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-body">Yes. Every component ships with light + dark mode variants wired up via Figma Variables modes. Toggle once, switch everywhere.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── CTA ─────────── -->
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-card">
+      <span class="eyebrow" style="color:var(--lime);justify-content:center;display:inline-flex">Launching soon</span>
+      <h2 style="margin-top:18px">Ship the product.<br><em>Not the buttons.</em></h2>
+      <p class="cta-sub">Be first in line when Fluxa launches. No spam, just the link and a quick start guide.</p>
+      <div class="cta-actions">
+        <a class="btn btn-lime" href="#">
+          <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="#0E0D10" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="#0E0D10"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="#0E0D10"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="#0E0D10"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="#0E0D10"/>
+</svg>
+
+          Get notified at launch
+          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#">View docs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FOOTER ─────────── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="#" style="color:var(--paper)">
+          <span class="logo-mark">
+            <svg viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="#d8ff3a">
+                <rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke="#d8ff3a" stroke-width="4" fill="none"/>
+                <rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)"/>
+                <path d="M39.598 33.941C36.4738 30.8168 36.4738 25.7515 39.598 22.6273L56.5685 5.65676C59.6927 2.53257 64.758 2.53257 67.8822 5.65676L84.8528 22.6273C87.977 25.7515 87.977 30.8168 84.8528 33.941L67.8822 50.9116C64.758 54.0358 59.6927 54.0358 56.5685 50.9116L39.598 33.941Z"/>
+                <rect x="33.9411" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9411 96.1665)"/>
+                <path d="M93.0281 54.2745C95.8129 55.6206 98.2339 56.3874 100.739 56.3874C103.244 56.3874 105.665 55.621 108.45 54.2745C107.106 57.0641 106.341 59.489 106.341 61.9984C106.341 64.508 107.105 66.9336 108.449 69.7236C105.664 68.3779 103.244 67.6121 100.739 67.6121C98.2337 67.6121 95.8122 68.3783 93.0267 69.725C94.3704 66.9353 95.1367 64.5106 95.1371 62.0011C95.1374 59.4911 94.3721 57.0651 93.0281 54.2745Z"/>
+              </g>
+            </svg>
+          </span>
+          Fluxa UI
+        </a>
+        <p>A Figma plugin that generates structured, reusable UI components — so you can ship products, not primitives.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#components">Components</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#how">How it works</a>
+      </div>
+      <div class="foot-col">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">Changelog</a>
+        <a href="#">Community</a>
+        <a href="#">Roadmap</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>© 2026 Fluxaui.com · All rights reserved.</div>
+      <div style="display:flex;gap:18px">
+        <a href="#">FAQs</a>
+        <a href="#">Changelog</a>
+        <a href="#">License</a>
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+    <div style="margin-top:18px;font-size:12px;color:rgba(250,250,247,0.4);text-align:center">
+      Fluxa is not affiliated with Figma, nor is it endorsed by or sponsored by Figma. Crafted with love and coffee by Madhes.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Steps: click to expand
+  document.querySelectorAll('.step').forEach(s => {
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.step').forEach(x => x.classList.remove('on'));
+      s.classList.add('on');
+    });
+  });
+
+  // Nav link active state on scroll
+  const links = [...document.querySelectorAll('.nav-link')];
+  const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY + 120;
+    let active = -1;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= y) active = i; });
+    links.forEach((l, i) => l.classList.toggle('active', i === active));
+  }, { passive: true });
+</script>
+
 </body>
 </html>
