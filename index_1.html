@@ -2,11 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Fluxa UI — Skip the setup. Ship the product.</title>
+<title>Fluxa UI — Skip the Setup. Start Designing Faster.</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-57NH0K0C48"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-57NH0K0C48');
+</script>
 <style>
   /* ─────────── Tokens ─────────── */
   :root{
@@ -59,7 +68,7 @@
   .eyebrow::before{content:"";width:24px;height:1.5px;background:currentColor}
 
   h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-0.02em;line-height:0.98}
-  h1{font-size:clamp(56px,7.0vw,128px);margin:0;}
+  h1{font-size:clamp(56px,7.0vw,128px);margin:0}
   h2{font-size:clamp(48px,6.4vw,92px);margin:0;line-height:0.96}
   h3{font-size:clamp(28px,3vw,38px);margin:0;letter-spacing:-0.01em;line-height:1.05}
   em{font-style:italic}
@@ -176,10 +185,7 @@
   }
   .pw-step.active .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
   .pw-step.active{color:var(--ink)}
-  .pw-step.done .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .pw-step.done{color:var(--ink)}
   .pw-line{flex:0 0 28px;height:1.5px;background:var(--g300);margin-top:14px}
-  .pw-line.fill{background:var(--ink)}
   .pw-label{
     font-size:13px;font-weight:600;margin:18px 0 10px;display:flex;justify-content:space-between;color:var(--g700)
   }
@@ -252,60 +258,6 @@
   .step-body p{margin:8px 0 0;color:var(--g500);font-size:15px;line-height:1.5;max-width:380px;display:none}
   .step.on .step-body p{display:block}
   .step.on .step-body h3{color:var(--ink)}
-
-  /* ---- How-it-works: clickable steps + multi-panel preview ---- */
-  .step{transition:opacity .2s ease;position:relative}
-  .step:not(.on){opacity:0.55}
-  .step:not(.on):hover{opacity:0.85}
-  .step.on::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--lime);border-radius:2px}
-  .step.on.run::after{animation:step-progress 10s linear forwards}
-  @keyframes step-progress{from{width:0}to{width:100%}}
-  @media (prefers-reduced-motion:reduce){.step.on.run::after{animation:none;width:100%}}
-  .pw-panel{display:none;animation:pw-fade .35s ease}
-  .pw-panel.on{display:block}
-  @keyframes pw-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  /* step 2 token ramps */
-  .pw-ramp{margin-bottom:12px}
-  .pw-ramp-head{display:flex;align-items:center;gap:7px;margin-bottom:5px}
-  .pw-ramp-head .rdot{width:9px;height:9px;border-radius:50%}
-  .pw-ramp-head .rname{font-size:12px;font-weight:600}
-  .pw-ramp-head .rhex{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--g500)}
-  .pw-ramp-cells{display:flex;height:18px;border-radius:5px;overflow:hidden;border:1px solid var(--g300)}
-  .pw-ramp-cells span{flex:1}
-  .pw-typescale{margin-top:14px;background:var(--cream);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px}
-  .pw-typescale .tlabel{font-family:var(--mono);font-size:10px;color:var(--g500);width:28px}
-  .pw-typescale .taa{font-family:var(--serif);font-size:30px;line-height:1}
-  .pw-typescale .tsize{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--g500)}
-  .pw-note{margin-top:14px;display:flex;gap:10px;align-items:flex-start;background:var(--cream);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.45;color:var(--g700)}
-  .pw-note .ni{color:var(--violet);flex-shrink:0}
-  .pw-note b{color:var(--ink)}
-  /* step 3 component checklist */
-  .pw-grouptag{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--g500);margin:4px 0 8px}
-  .pw-comp{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;background:var(--cream);margin-bottom:8px}
-  .pw-comp .cbox{width:22px;height:22px;border-radius:6px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .pw-comp .cbody{flex:1;min-width:0}
-  .pw-comp .cname{font-size:13.5px;font-weight:700;letter-spacing:-0.2px}
-  .pw-comp .cvariants{font-size:11px;color:var(--g500);margin-top:1px}
-  .pw-comp .ccount{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--violet);background:color-mix(in oklab,var(--violet) 12%,#fff);padding:3px 9px;border-radius:99px}
-  /* step 4 generate */
-  .pw-summary{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:11px;padding:11px 14px;margin-bottom:16px;font-size:12.5px;font-weight:500;color:var(--g700)}
-  .pw-summary .dots{display:flex}
-  .pw-summary .dots span{width:16px;height:16px;border-radius:50%;border:2px solid #fff}
-  .pw-summary .dots span:not(:first-child){margin-left:-6px}
-  .pw-genlist{border:1.5px solid var(--g300);border-radius:12px;overflow:hidden;margin-bottom:14px}
-  .pw-genrow{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:1px solid rgba(14,13,16,0.08)}
-  .pw-genrow:last-child{border-bottom:none}
-  .pw-genrow .gck{width:22px;height:22px;border-radius:50%;background:#15803d;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .pw-genrow .glock{width:22px;height:22px;border-radius:50%;background:var(--g100);color:var(--g500);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .pw-genrow .gname{font-size:13.5px;font-weight:700;letter-spacing:-0.2px}
-  .pw-genrow .gsub{font-size:11px;color:var(--g500);margin-top:1px}
-  .pw-genrow.locked .gname{color:var(--g500)}
-  .pw-genrow .gpro{margin-left:auto;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:0.06em;color:var(--violet);background:color-mix(in oklab,var(--violet) 12%,#fff);padding:3px 8px;border-radius:99px}
-  .pw-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .pw-stat{background:var(--cream);border-radius:11px;padding:14px 10px;text-align:center}
-  .pw-stat .sv{font-family:var(--serif);font-size:26px;line-height:1}
-  .pw-stat .sl{font-size:10.5px;color:var(--g500);margin-top:3px}
-  .pw-foot .pf-btn.pw-gen-btn{background:linear-gradient(90deg,#4A8CFF,#7C3AED 45%,#DD48DD 70%,#FE6113);color:#fff}
 
   /* ─────────── FEATURES ─────────── */
   .features-grid{
@@ -432,7 +384,7 @@
   }
   .price-popular{background:var(--ink);color:var(--paper)}
   .price-popular .price-feat li{color:rgba(250,250,247,0.85)}
-  .price-popular .price-feat li .ck{color:var(--lime)}
+  /* .price-popular .price-feat li .ck{color:var(--lime)} */
   .price-popular .price-cta{background:var(--lime);color:var(--ink);border-color:var(--lime)}
   .price-tag{
     position:absolute;top:-14px;right:24px;
@@ -523,90 +475,6 @@
     font-size:13px;color:rgba(250,250,247,0.5);
   }
   .foot-bot a:hover{color:var(--lime)}
-
-  /* ─────────── TWEAK: Shape language ───────────
-     "brutalist" = base styles (hard offset shadows, 1.5px ink borders).
-     "soft" and "sharp" reshape the entire surface treatment. Selectors are
-     prefixed with body[data-shape=…] so they out-specify the single-class base. */
-
-  /* SOFT — friendly SaaS: blurred shadows, faint borders, generous radius */
-  body[data-shape="soft"]{
-    --r:22px; --r-lg:30px;
-    --shadow:0 22px 48px -20px rgba(14,13,16,0.30);
-    --shadow-sm:0 10px 24px -10px rgba(14,13,16,0.22);
-  }
-  body[data-shape="soft"] .plugin-window,
-  body[data-shape="soft"] .feature,
-  body[data-shape="soft"] .show-card,
-  body[data-shape="soft"] .price,
-  body[data-shape="soft"] .faq-item,
-  body[data-shape="soft"] .pill,
-  body[data-shape="soft"] .float-chip,
-  body[data-shape="soft"] .price-tag,
-  body[data-shape="soft"] .btn,
-  body[data-shape="soft"] .price-cta,
-  body[data-shape="soft"] .m-input,
-  body[data-shape="soft"] .m-card-mini,
-  body[data-shape="soft"] .m-tabs,
-  body[data-shape="soft"] .pw-color-input,
-  body[data-shape="soft"] .pw-intensity .opt,
-  body[data-shape="soft"] .step-n,
-  body[data-shape="soft"] .faq-icon{
-    border-color:rgba(14,13,16,0.08);
-  }
-  body[data-shape="soft"] .plugin-window{box-shadow:0 34px 70px -28px rgba(14,13,16,0.38);border-radius:28px}
-  body[data-shape="soft"] .feature{box-shadow:var(--shadow)}
-  body[data-shape="soft"] .feature:hover{box-shadow:0 32px 62px -22px rgba(14,13,16,0.34);transform:translateY(-5px)}
-  body[data-shape="soft"] .show-card,
-  body[data-shape="soft"] .faq-item,
-  body[data-shape="soft"] .btn-primary,
-  body[data-shape="soft"] .btn-lime,
-  body[data-shape="soft"] .m-input,
-  body[data-shape="soft"] .m-card-mini,
-  body[data-shape="soft"] .m-tabs,
-  body[data-shape="soft"] .price-tag{box-shadow:var(--shadow-sm)}
-  body[data-shape="soft"] .price{box-shadow:var(--shadow)}
-  body[data-shape="soft"] .cta-card,
-  body[data-shape="soft"] .cta-card{box-shadow:var(--shadow)}
-  body[data-shape="soft"] .step.on .step-n{box-shadow:var(--shadow-sm)}
-  body[data-shape="soft"] .feature:hover,
-  body[data-shape="soft"] .price-cta:hover,
-  body[data-shape="soft"] .btn-primary:hover,
-  body[data-shape="soft"] .btn-lime:hover{transform:translateY(-3px)}
-
-  /* SHARP — technical/precise: no offset, crisp 1px lines, near-zero radius */
-  body[data-shape="sharp"]{
-    --r:2px; --r-lg:3px; --r-pill:3px;
-    --shadow:0 0 0 1.5px var(--ink);
-    --shadow-sm:0 0 0 1.5px var(--ink);
-  }
-  body[data-shape="sharp"] .plugin-window,
-  body[data-shape="sharp"] .feature,
-  body[data-shape="sharp"] .show-card,
-  body[data-shape="sharp"] .price,
-  body[data-shape="sharp"] .faq-item,
-  body[data-shape="sharp"] .cta-card,
-  body[data-shape="sharp"] .btn-primary,
-  body[data-shape="sharp"] .btn-lime,
-  body[data-shape="sharp"] .m-input,
-  body[data-shape="sharp"] .m-card-mini,
-  body[data-shape="sharp"] .m-tabs,
-  body[data-shape="sharp"] .price-tag,
-  body[data-shape="sharp"] .pill,
-  body[data-shape="sharp"] .float-chip,
-  body[data-shape="sharp"] .pw-intensity .opt.on,
-  body[data-shape="sharp"] .step.on .step-n{box-shadow:none}
-  body[data-shape="sharp"] .feature:hover{transform:none;box-shadow:inset 0 0 0 2px var(--ink)}
-  body[data-shape="sharp"] .show-card:hover,
-  body[data-shape="sharp"] .faq-item:hover,
-  body[data-shape="sharp"] .btn:hover,
-  body[data-shape="sharp"] .price-cta:hover{transform:none}
-  body[data-shape="sharp"] .float-chip-1{transform:rotate(0deg)}
-  body[data-shape="sharp"] .float-chip-2{transform:rotate(0deg)}
-  body[data-shape="sharp"] .price-tag{transform:rotate(0deg)}
-
-  /* The Tweaks panel mount must never disturb layout */
-  #tweak-root{position:fixed;top:0;left:0;width:0;height:0;z-index:60}
 </style>
 </head>
 <body>
@@ -616,15 +484,32 @@
   <div class="wrap nav-inner">
     <a class="logo" href="#">
       <span class="logo-mark">
-        <svg viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g fill="currentColor">
-            <rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke="currentColor" stroke-width="4" fill="none"/>
-            <rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)"/>
-            <path d="M39.598 33.941C36.4738 30.8168 36.4738 25.7515 39.598 22.6273L56.5685 5.65676C59.6927 2.53257 64.758 2.53257 67.8822 5.65676L84.8528 22.6273C87.977 25.7515 87.977 30.8168 84.8528 33.941L67.8822 50.9116C64.758 54.0358 59.6927 54.0358 56.5685 50.9116L39.598 33.941Z"/>
-            <rect x="33.9411" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9411 96.1665)"/>
-            <path d="M95.8256 55.4613C97.5106 56.06 99.1067 56.3874 100.739 56.3874C103.244 56.3874 105.665 55.621 108.45 54.2745C107.106 57.0641 106.341 59.489 106.341 61.9984C106.341 63.6337 106.666 65.2334 107.263 66.9216C105.407 65.4679 103.293 63.5691 101.233 61.5049C99.1722 59.4401 97.2769 57.3213 95.8256 55.4613ZM95.0778 60.8013C96.1325 61.9918 97.262 63.1885 98.4072 64.3359C99.5522 65.4831 100.747 66.6142 101.935 67.6708C101.537 67.6325 101.139 67.6121 100.739 67.6121C98.2337 67.6121 95.8122 68.3783 93.0267 69.725C94.3704 66.9353 95.1367 64.5106 95.1371 62.0011C95.1371 61.5997 95.116 61.2003 95.0778 60.8013Z"/>
+        <!-- <svg viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="fl-grad" x1="73.5" y1="108.5" x2="109" y2="24.5" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FE6113"/>
+              <stop offset="0.255" stop-color="#FE3151"/>
+              <stop offset="0.514" stop-color="#DD48DD"/>
+              <stop offset="0.731" stop-color="#8168E5"/>
+              <stop offset="1" stop-color="#0048FF"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#fl-grad)" stroke="url(#fl-grad)">
+            <rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke-width="4" fill="none"/>
+            <rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)" stroke="none"/>
+            <path d="M39.598 33.941C36.4738 30.8168 36.4738 25.7515 39.598 22.6273L56.5685 5.65676C59.6927 2.53257 64.758 2.53257 67.8822 5.65676L84.8528 22.6273C87.977 25.7515 87.977 30.8168 84.8528 33.941L67.8822 50.9116C64.758 54.0358 59.6927 54.0358 56.5685 50.9116L39.598 33.941Z" stroke="none"/>
+            <rect x="33.9411" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9411 96.1665)" stroke="none"/>
+            <path d="M93.0281 54.2745C95.8129 55.6206 98.2339 56.3874 100.739 56.3874C103.244 56.3874 105.665 55.621 108.45 54.2745C107.106 57.0641 106.341 59.489 106.341 61.9984C106.341 64.508 107.105 66.9336 108.449 69.7236C105.664 68.3779 103.244 67.6121 100.739 67.6121C98.2337 67.6121 95.8122 68.3783 93.0267 69.725C94.3704 66.9353 95.1367 64.5106 95.1371 62.0011C95.1374 59.4911 94.3721 57.0651 93.0281 54.2745Z" stroke="none"/>
           </g>
-        </svg>
+        </svg> -->
+        <svg width="136" height="125" viewBox="0 0 136 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="70.8284" y="62.2253" width="44" height="44" rx="6" transform="rotate(-45 70.8284 62.2253)" stroke="#0E0D10" stroke-width="4"/>
+<rect y="62.2253" width="40" height="40" rx="8" transform="rotate(-45 0 62.2253)" fill="#0E0D10"/>
+<path d="M39.598 33.9412C36.4738 30.817 36.4738 25.7516 39.598 22.6274L56.5686 5.65688C59.6928 2.53269 64.7581 2.53269 67.8823 5.65689L84.8528 22.6274C87.977 25.7516 87.977 30.817 84.8528 33.9412L67.8823 50.9117C64.7581 54.0359 59.6928 54.0359 56.5686 50.9117L39.598 33.9412Z" fill="#0E0D10"/>
+<rect x="33.9412" y="96.1665" width="40" height="40" rx="8" transform="rotate(-45 33.9412 96.1665)" fill="#0E0D10"/>
+<path d="M111.16 50.5667C102.2 55.6593 99.2778 55.6579 90.3187 50.5678C90.0338 50.4059 89.6771 50.4548 89.4461 50.6862C89.2151 50.9176 89.1664 51.275 89.328 51.5603C94.4102 60.5371 94.4085 63.4644 89.3268 72.4407C89.1651 72.7261 89.2152 73.0822 89.4461 73.3136C89.6771 73.545 90.0338 73.5938 90.3174 73.4331C99.2782 68.3405 102.2 68.3418 111.159 73.4319C111.444 73.5939 111.801 73.545 112.032 73.3136C112.263 73.0822 112.311 72.7248 112.15 72.4394C107.068 63.4626 107.069 60.5353 112.151 51.559C112.313 51.2736 112.263 50.9176 112.032 50.6862C111.801 50.4548 111.444 50.406 111.16 50.5667Z" fill="#0E0D10"/>
+</svg>
+
       </span>
       Fluxa UI
     </a>
@@ -637,10 +522,14 @@
     </nav>
     <div class="nav-cta">
       <a class="btn btn-primary" href="#">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M3 1h5a3 3 0 010 6H3z M8 7a3 3 0 110 6 3 3 0 010-6z M3 7h5v6H3z" fill="#d8ff3a"/>
-        </svg>
-        Install Plugin
+      <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="white" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="white"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="white"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="white"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="white"/>
+</svg>
+Install Plugin
       </a>
     </div>
   </div>
@@ -661,18 +550,23 @@
       </h1>
       <p class="hero-sub">
         From <b>tokens to base components</b>, Fluxa sets up the building blocks
-        inside Figma so you can skip repetitive setup and focus on crafting
+        inside Figma — so you can skip repetitive setup and focus on crafting
         your <b>own scalable design system</b>.
       </p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#">
-          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M3 1h5a3 3 0 010 6H3z M8 7a3 3 0 110 6 3 3 0 010-6z M3 7h5v6H3z" fill="#d8ff3a"/>
-          </svg>
+          <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="white" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="white"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="white"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="white"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="white"/>
+</svg>
+
           Install Plugin
           <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
         </a>
-        <a class="btn btn-ghost" href="https://www.youtube.com/watch?v=H-LQbg672uI" target="_blank">View Demo</a>
+        <a class="btn btn-ghost" href="#">View Demo</a>
       </div>
       <div class="hero-meta">
         <div class="meta-item"><b>200+</b><span>Component variants</span></div>
@@ -688,7 +582,7 @@
         <div class="pw-bar">
           <div class="pw-bar-left">
             <span class="pw-bar-dots"><span></span><span></span><span></span></span>
-            Design System Generator
+            Design System Component Generator
           </div>
           <span style="opacity:0.5">×</span>
         </div>
@@ -757,180 +651,85 @@
 
     <div class="how-grid">
       <div class="steps">
-        <div class="step on" data-step="0">
+        <div class="step on">
           <div class="step-n">01</div>
           <div class="step-body">
             <h3>Set your brand identity</h3>
-            <p>Input your brand colors — primary, secondary, and full semantic set. Each is checked for AA contrast, then pick your type, spacing, and radius character.</p>
+            <p>Input primary and secondary brand colors. Choose palette intensity — soft, balanced, or strong — to define the character of your system.</p>
           </div>
         </div>
-        <div class="step" data-step="1">
+        <div class="step">
           <div class="step-n">02</div>
           <div class="step-body">
             <h3>Auto-generate design tokens</h3>
-            <p>Full 50–900 color ramps, a complete type scale, spacing, and radius — generated from your inputs as ~200+ Figma Variables in Light &amp; Dark mode.</p>
+            <p>50–900 color scales, full type ramps, spacing — all generated from your brand inputs in seconds.</p>
           </div>
         </div>
-        <div class="step" data-step="2">
+        <div class="step">
           <div class="step-n">03</div>
           <div class="step-body">
             <h3>Choose your components</h3>
-            <p>Tick the groups you need — Button, Input, Selection Controls, Badge, Feedback and more. Each shows exactly how many variants it ships.</p>
+            <p>Pick from 6 component groups. Buttons, inputs, navigation, cards, modals — only generate what you'll use.</p>
           </div>
         </div>
-        <div class="step" data-step="3">
+        <div class="step">
           <div class="step-n">04</div>
           <div class="step-body">
-            <h3>Generate &amp; ship to Figma</h3>
-            <p>Review what's included, then generate. Everything lands as auto-layout-ready components across organized Figma pages — Pro unlocks Cards &amp; Layout.</p>
+            <h3>Ship to Figma instantly</h3>
+            <p>Everything lands in your file as auto-layout-ready components with Figma Variables wired up — ready to design with.</p>
           </div>
         </div>
       </div>
 
-      <!-- Embedded plugin preview — switches with the active step -->
+      <!-- Embedded plugin preview -->
       <div class="plugin-window" style="transform:rotate(-1.5deg)">
         <div class="pw-bar">
           <div class="pw-bar-left">
             <span class="pw-bar-dots"><span></span><span></span><span></span></span>
-            <span id="pw-step-label">Step 1 · Brand</span>
+            Step 1 · Brand
           </div>
           <span style="opacity:0.5">×</span>
         </div>
         <div class="pw-body">
-
-          <!-- PANEL 1 · BRAND -->
-          <div class="pw-panel on" data-panel="0">
-            <div class="pw-steps">
-              <div class="pw-step active"><div class="n">1</div>Brand</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">2</div>Tokens</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">3</div>Components</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">4</div>Generate</div>
+          <div class="pw-steps">
+            <div class="pw-step active"><div class="n">1</div>Brand</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">2</div>Tokens</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">3</div>Components</div>
+            <div class="pw-line"></div>
+            <div class="pw-step"><div class="n">4</div>Generate</div>
+          </div>
+          <div class="pw-label"><span>Brand Colors</span></div>
+          <div class="pw-row">
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Primary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#5b3df5"></span> #5B3DF5</div>
             </div>
-            <div class="pw-label"><span>Brand Colors</span></div>
-            <div class="pw-row">
-              <div>
-                <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Primary</div>
-                <div class="pw-color-input"><span class="sw" style="background:#4F46E5"></span> #4F46E5</div>
-              </div>
-              <div>
-                <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Secondary</div>
-                <div class="pw-color-input"><span class="sw" style="background:#7C3AED"></span> #7C3AED</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:10px">
-              <div class="pw-color-input" style="flex:1;font-size:11px"><span class="sw" style="background:#15803D"></span> Success</div>
-              <div class="pw-color-input" style="flex:1;font-size:11px"><span class="sw" style="background:#B45309"></span> Warning</div>
-              <div class="pw-color-input" style="flex:1;font-size:11px"><span class="sw" style="background:#DC2626"></span> Error</div>
-            </div>
-            <div class="pw-palette">
-              <span style="background:#ece7ff"></span>
-              <span style="background:#d4caff"></span>
-              <span style="background:#b3a1ff"></span>
-              <span style="background:#8a72f8"></span>
-              <span style="background:#5b3df5"></span>
-              <span style="background:#4628d0"></span>
-              <span style="background:#3719a8"></span>
-              <span style="background:#280f7c"></span>
-              <span style="background:#190850"></span>
-            </div>
-            <div class="pw-intensity">
-              <div class="opt">Soft<small>Muted</small></div>
-              <div class="opt on">Balanced<small>Default</small></div>
-              <div class="opt">Strong<small>Vivid</small></div>
-            </div>
-            <div style="margin-top:12px;padding:11px 14px;background:var(--cream);border-radius:10px;font-size:12px;font-family:var(--mono);color:var(--g700)">
-              Inter · 16px · 1.333 Perfect Fourth
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:var(--g500);margin-bottom:6px;text-transform:uppercase">Secondary</div>
+              <div class="pw-color-input"><span class="sw" style="background:#4a8cff"></span> #4A8CFF</div>
             </div>
           </div>
-
-          <!-- PANEL 2 · TOKENS -->
-          <div class="pw-panel" data-panel="1">
-            <div class="pw-steps">
-              <div class="pw-step done"><div class="n">✓</div>Brand</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step active"><div class="n">2</div>Tokens</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">3</div>Components</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">4</div>Generate</div>
-            </div>
-            <div class="pw-label"><span>Color Palette</span></div>
-            <div class="pw-ramp">
-              <div class="pw-ramp-head"><span class="rdot" style="background:#4f46e5"></span><span class="rname">Primary</span><span class="rhex">#4f46e5</span></div>
-              <div class="pw-ramp-cells"><span style="background:#eef0fd"></span><span style="background:#dde0fb"></span><span style="background:#bcc2f7"></span><span style="background:#929bf0"></span><span style="background:#6b75ea"></span><span style="background:#4f46e5"></span><span style="background:#3f37c4"></span><span style="background:#322b9c"></span><span style="background:#272178"></span><span style="background:#1a1652"></span></div>
-            </div>
-            <div class="pw-ramp">
-              <div class="pw-ramp-head"><span class="rdot" style="background:#7c3aed"></span><span class="rname">Secondary</span><span class="rhex">#7c3aed</span></div>
-              <div class="pw-ramp-cells"><span style="background:#f3ecfd"></span><span style="background:#e7d9fb"></span><span style="background:#cfb3f6"></span><span style="background:#b088f0"></span><span style="background:#965eeb"></span><span style="background:#7c3aed"></span><span style="background:#6a2fcb"></span><span style="background:#54269f"></span><span style="background:#3f1d77"></span><span style="background:#2a134f"></span></div>
-            </div>
-            <div class="pw-ramp">
-              <div class="pw-ramp-head"><span class="rdot" style="background:#15803d"></span><span class="rname">Success</span><span class="rhex">#15803d</span></div>
-              <div class="pw-ramp-cells"><span style="background:#e8f5ec"></span><span style="background:#cfe9d8"></span><span style="background:#a3d4b5"></span><span style="background:#6dbb8b"></span><span style="background:#3a9d61"></span><span style="background:#15803d"></span><span style="background:#126b33"></span><span style="background:#0e5429"></span><span style="background:#0a3e1e"></span><span style="background:#062813"></span></div>
-            </div>
-            <div class="pw-typescale">
-              <span class="tlabel">H1</span><span class="taa">Aa</span><span class="tsize">48px</span>
-            </div>
-            <div class="pw-note">
-              <span class="ni"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v4M8 4.7v.1"/></svg></span>
-              <span><b>~200+ tokens</b> will be created as Figma Local Variables in <b>Light &amp; Dark</b> mode.</span>
-            </div>
+          <div class="pw-palette">
+            <span style="background:#ece7ff"></span>
+            <span style="background:#d4caff"></span>
+            <span style="background:#b3a1ff"></span>
+            <span style="background:#8a72f8"></span>
+            <span style="background:#5b3df5"></span>
+            <span style="background:#4628d0"></span>
+            <span style="background:#3719a8"></span>
+            <span style="background:#280f7c"></span>
+            <span style="background:#190850"></span>
           </div>
-
-          <!-- PANEL 3 · COMPONENTS -->
-          <div class="pw-panel" data-panel="2">
-            <div class="pw-steps">
-              <div class="pw-step done"><div class="n">✓</div>Brand</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step done"><div class="n">✓</div>Tokens</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step active"><div class="n">3</div>Components</div>
-              <div class="pw-line"></div>
-              <div class="pw-step"><div class="n">4</div>Generate</div>
-            </div>
-            <div class="pw-label" style="font-size:14px;font-family:var(--serif);font-weight:400"><span>Choose components to include.</span></div>
-            <div class="pw-grouptag">FREE</div>
-            <div class="pw-comp"><span class="cbox"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div class="cbody"><div class="cname">Button</div><div class="cvariants">Primary · Secondary · Ghost · Danger · Icon</div></div><span class="ccount">60</span></div>
-            <div class="pw-comp"><span class="cbox"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div class="cbody"><div class="cname">Input</div><div class="cvariants">Text field · Select · Textarea</div></div><span class="ccount">40</span></div>
-            <div class="pw-comp"><span class="cbox"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div class="cbody"><div class="cname">Selection Controls</div><div class="cvariants">Checkbox · Radio · Switch</div></div><span class="ccount">40</span></div>
-            <div class="pw-comp"><span class="cbox"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div class="cbody"><div class="cname">Badge</div><div class="cvariants">Soft · Solid · Outline · Sizes · Status</div></div><span class="ccount">45</span></div>
-            <div class="pw-comp"><span class="cbox"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div class="cbody"><div class="cname">Feedback</div><div class="cvariants">Alert · Toast · Tooltip · Spinner · Skeleton</div></div><span class="ccount">42</span></div>
+          <div class="pw-intensity">
+            <div class="opt">Soft<small>Muted</small></div>
+            <div class="opt on">Balanced<small>Default</small></div>
+            <div class="opt">Strong<small>Vivid</small></div>
           </div>
-
-          <!-- PANEL 4 · GENERATE -->
-          <div class="pw-panel" data-panel="3">
-            <div class="pw-steps">
-              <div class="pw-step done"><div class="n">✓</div>Brand</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step done"><div class="n">✓</div>Tokens</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step done"><div class="n">✓</div>Components</div>
-              <div class="pw-line fill"></div>
-              <div class="pw-step active"><div class="n">4</div>Generate</div>
-            </div>
-            <div class="pw-summary">
-              <span class="dots"><span style="background:#4f46e5"></span><span style="background:#7c3aed"></span><span style="background:#15803d"></span><span style="background:#dc2626"></span></span>
-              Inter · 16px · Rounded · 4px grid
-            </div>
-            <div class="pw-label" style="font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--g500)"><span>What gets generated</span></div>
-            <div class="pw-genlist">
-              <div class="pw-genrow"><span class="gck"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div><div class="gname">Foundations</div><div class="gsub">Variables, palettes, spacing, type</div></div></div>
-              <div class="pw-genrow"><span class="gck"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div><div class="gname">Buttons &amp; Forms</div><div class="gsub">Primary, Secondary, Input, Select</div></div></div>
-              <div class="pw-genrow"><span class="gck"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 6.8l2.6 2.6L11 3.5"/></svg></span><div><div class="gname">Navigation &amp; Feedback</div><div class="gsub">Tab bar, Breadcrumb, Alert, Toast</div></div></div>
-              <div class="pw-genrow locked"><span class="glock"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="7" height="5" rx="1"/><path d="M4 5.5V4a2 2 0 014 0v1.5"/></svg></span><div><div class="gname">Cards &amp; Data</div><div class="gsub">Card, Avatar, Data table, Date picker</div></div><span class="gpro">PRO</span></div>
-            </div>
-            <div class="pw-stats">
-              <div class="pw-stat"><div class="sv">200+</div><div class="sl">Variables</div></div>
-              <div class="pw-stat"><div class="sv">5</div><div class="sl">Figma pages</div></div>
-              <div class="pw-stat"><div class="sv">2</div><div class="sl">Modes</div></div>
-            </div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--cream);border-radius:10px;font-size:12px;font-family:var(--mono);color:var(--g700);display:flex;justify-content:space-between">
+            <span>The quick brown fox · Aa Bb Cc 1 2 3</span>
           </div>
-        </div>
-        <div class="pw-foot">
-          <span class="pf-btn-ghost" id="pw-back">← Back</span>
-          <span class="pf-btn" id="pw-next">Continue</span>
         </div>
       </div>
     </div>
@@ -1152,7 +951,7 @@
       <div class="price price-popular">
         <span class="price-tag">Most Popular</span>
         <div class="price-name">Pro</div>
-        <div class="price-amount">$12<small>/month</small></div>
+        <div class="price-amount">$25<small>/Onetime</small></div>
         <p class="price-desc">For designers and teams building serious products.</p>
         <ul class="price-feat">
           <li><span class="ck">✓</span> Full design system generation</li>
@@ -1224,9 +1023,14 @@
       <p class="cta-sub">Be first in line when Fluxa launches. No spam, just the link and a quick start guide.</p>
       <div class="cta-actions">
         <a class="btn btn-lime" href="#">
-          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M3 1h5a3 3 0 010 6H3z M8 7a3 3 0 110 6 3 3 0 010-6z M3 7h5v6H3z" fill="#0e0d10"/>
-          </svg>
+          <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10.425" y="9.15869" width="6.4762" height="6.4762" rx="0.883118" transform="rotate(-45 10.425 9.15869)" stroke="#0E0D10" stroke-width="0.588745"/>
+<rect y="9.15869" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 0 9.15869)" fill="#0E0D10"/>
+<path d="M5.82834 4.9957C5.3685 4.53586 5.3685 3.79031 5.82834 3.33047L8.32617 0.832641C8.78601 0.372802 9.53156 0.372803 9.9914 0.832641L12.4892 3.33047C12.9491 3.79031 12.9491 4.53586 12.4892 4.9957L9.99139 7.49353C9.53156 7.95337 8.78601 7.95337 8.32617 7.49353L5.82834 4.9957Z" fill="#0E0D10"/>
+<rect x="4.99573" y="14.1544" width="5.88745" height="5.88745" rx="1.17749" transform="rotate(-45 4.99573 14.1544)" fill="#0E0D10"/>
+<path d="M16.3611 7.44292C15.0422 8.19249 14.6122 8.19228 13.2935 7.44309C13.2516 7.41925 13.1991 7.42645 13.1651 7.46051C13.1311 7.49457 13.1239 7.54717 13.1477 7.58918C13.8957 8.91044 13.8955 9.34129 13.1475 10.6625C13.1237 10.7045 13.1311 10.7569 13.1651 10.791C13.1991 10.825 13.2516 10.8322 13.2933 10.8085C14.6122 10.059 15.0423 10.0592 16.3609 10.8084C16.4029 10.8322 16.4554 10.825 16.4894 10.791C16.5234 10.7569 16.5305 10.7043 16.5067 10.6623C15.7587 9.34103 15.759 8.91017 16.5069 7.58899C16.5307 7.54698 16.5234 7.49457 16.4894 7.46051C16.4554 7.42645 16.4029 7.41927 16.3611 7.44292Z" fill="#0E0D10"/>
+</svg>
+
           Get notified at launch
           <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
         </a>
@@ -1293,52 +1097,14 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Steps: auto-advance (10s each, looping) + click to jump
-  (function(){
-    const steps = [...document.querySelectorAll('.steps .step')];
-    const panels = [...document.querySelectorAll('.pw-panel')];
-    const labels = ['Step 1 · Brand','Step 2 · Tokens','Step 3 · Components','Step 4 · Generate'];
-    const labelEl = document.getElementById('pw-step-label');
-    const nextBtn = document.getElementById('pw-next');
-    const backBtn = document.getElementById('pw-back');
-    const DUR = 10000;
-    let i = 0, timer = null, inView = false;
-    function render(){
-      steps.forEach((s, k) => { s.classList.toggle('on', k === i); if (k !== i) s.classList.remove('run'); });
-      panels.forEach((p, k) => p.classList.toggle('on', k === i));
-      if (labelEl) labelEl.textContent = labels[i];
-      if (nextBtn) { nextBtn.textContent = i === 3 ? '✨ Generate' : 'Continue'; nextBtn.classList.toggle('pw-gen-btn', i === 3); }
-      if (backBtn) backBtn.style.visibility = i === 0 ? 'hidden' : 'visible';
-      // restart the active step's progress bar in sync with the timer
-      const active = steps[i];
-      if (active) { active.classList.remove('run'); void active.offsetWidth; if (inView) active.classList.add('run'); }
-    }
-    function show(n){ i = (n + 4) % 4; render(); }
-    function tick(){ show(i + 1); }
-    function play(){ if (timer) return; timer = setInterval(tick, DUR); const a = steps[i]; if (a) { a.classList.remove('run'); void a.offsetWidth; a.classList.add('run'); } }
-    function stop(){ clearInterval(timer); timer = null; const a = steps[i]; if (a) a.classList.remove('run'); }
-    function restart(){ stop(); if (inView) play(); }
-    steps.forEach((s, k) => s.addEventListener('click', () => { show(k); restart(); }));
-    if (nextBtn) nextBtn.addEventListener('click', () => { show(i + 1); restart(); });
-    if (backBtn) backBtn.addEventListener('click', () => { show(i - 1); restart(); });
-    // Auto-play while the section is on screen (scroll-based; IO is unreliable in some embeds)
-    const how = document.getElementById('how');
-    function visible(){
-      const r = how.getBoundingClientRect();
-      return r.bottom > 120 && r.top < (window.innerHeight - 120);
-    }
-    function sync(){
-      const v = visible() && !document.hidden;
-      if (v !== inView){ inView = v; if (inView){ render(); play(); } else stop(); }
-    }
-    window.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-    document.addEventListener('visibilitychange', sync);
-    show(0);
-    inView = visible() && !document.hidden;
-    if (inView){ render(); play(); }
-  })();
+<script>
+  // Steps: click to expand
+  document.querySelectorAll('.step').forEach(s => {
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.step').forEach(x => x.classList.remove('on'));
+      s.classList.add('on');
+    });
+  });
 
   // Nav link active state on scroll
   const links = [...document.querySelectorAll('.nav-link')];
@@ -1349,76 +1115,6 @@
     sections.forEach((s, i) => { if (s && s.offsetTop <= y) active = i; });
     links.forEach((l, i) => l.classList.toggle('active', i === active));
   }, { passive: true });
-</script>
-
-<!-- ─────────── TWEAKS ─────────── -->
-<div id="tweak-root"></div>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" data-presets="react">
-  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "palette": [
-      "#d8ff3a",
-      "#5b3df5",
-      "#3b1edb"
-    ],
-    "mood": "linen",
-    "shape": "brutalist"
-  }/*EDITMODE-END*/;
-
-  // Canvas-mood presets — shift the warm/cool/deep temperature of the whole page.
-  const MOODS = {
-    sand:      { '--cream':'#f3eee2', '--cream-2':'#ebe6d8', '--paper':'#fafaf7', '--ink':'#0e0d10', '--g500':'#6b6b65', '--g700':'#3a3a36', '--g300':'#c6c5bf', '--g100':'#ebebe8' },
-    porcelain: { '--cream':'#f4f5f7', '--cream-2':'#e8ebef', '--paper':'#ffffff', '--ink':'#15161a', '--g500':'#6a6d75', '--g700':'#383a40', '--g300':'#c8cad0', '--g100':'#eceef1' },
-    linen:     { '--cream':'#ece2cf', '--cream-2':'#e2d6bd', '--paper':'#f9f3e7', '--ink':'#1b1710', '--g500':'#736b58', '--g700':'#41392a', '--g300':'#c7bda6', '--g100':'#e6ddca' },
-  };
-
-  function App() {
-    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
-
-    React.useEffect(() => {
-      const root = document.documentElement;
-      // palette → pop / accent / accent-deep
-      root.style.setProperty('--lime', t.palette[0]);
-      root.style.setProperty('--violet', t.palette[1]);
-      root.style.setProperty('--violet-deep', t.palette[2] || t.palette[1]);
-      root.style.setProperty('--blue', t.palette[1]);
-      // mood → canvas temperature
-      const m = MOODS[t.mood] || MOODS.sand;
-      Object.entries(m).forEach(([k, v]) => root.style.setProperty(k, v));
-      // shape → surface treatment
-      document.body.dataset.shape = t.shape;
-    }, [t.palette, t.mood, t.shape]);
-
-    return (
-      <TweaksPanel title="Tweaks">
-        <TweakSection label="Brand" />
-        <TweakColor
-          label="Pop palette" value={t.palette}
-          options={[
-            ['#d8ff3a','#5b3df5','#3b1edb'],
-            ['#5FE3C0','#4338FF','#2f23d4'],
-            ['#FFC53A','#C32BC8','#9c1fa0'],
-            ['#7CC6FF','#FF5A5F','#e23b46'],
-          ]}
-          onChange={(v) => setTweak('palette', v)} />
-
-        <TweakSection label="Surface" />
-        <TweakRadio
-          label="Canvas mood" value={t.mood}
-          options={['sand','porcelain','linen']}
-          onChange={(v) => setTweak('mood', v)} />
-        <TweakRadio
-          label="Shape language" value={t.shape}
-          options={['brutalist','soft','sharp']}
-          onChange={(v) => setTweak('shape', v)} />
-      </TweaksPanel>
-    );
-  }
-
-  ReactDOM.createRoot(document.getElementById('tweak-root')).render(<App />);
 </script>
 
 </body>
